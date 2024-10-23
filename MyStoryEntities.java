@@ -46,8 +46,8 @@ public final class MyStoryEntities {
 	public static final Furniture fireplace = new Furniture(tavern, FurnitureTypes.Fireplace);
 	public static final Furniture roundtable = new Furniture(tavern, FurnitureTypes.RoundTable);
 	public static final Furniture redhousedoor = new Furniture(city, FurnitureTypes.RedHouseDoor);
-	public static final Furniture cottageDoor = new Furniture(cottage, FurnitureTypes.Door);
-	public static final Furniture table = new Furniture(cottage, FurnitureTypes.Table);
+	//public static final Furniture cottageDoor = new Furniture(cottage, FurnitureTypes.Door);
+	//public static final Furniture table = new Furniture(cottage, FurnitureTypes.Table);
 	public static final Furniture dungeonDoor = new Furniture(city, FurnitureTypes.BlueHouseDoor);
 	public static final Furniture well = new Furniture(forestpath, FurnitureTypes.Well);
 	public static final Furniture tavernbar = new Furniture(tavern, FurnitureTypes.Bar);
