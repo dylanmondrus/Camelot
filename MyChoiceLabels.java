@@ -2,13 +2,24 @@ package myclassproject.mystorygraph;
 
 //Fill this enum with the labels you chose for the EDGES of your story graph.
 public enum MyChoiceLabels {
+	StartGameEdges,
+	rootEdges,
+	atCityEdges,
+	gotoBarrell,
+	gotoMerchantBill,
+	PickUpApple,
+	WalkToFountain,
+	TalkToBeggar,
+	WalkToMerchantBill, 
+	TalkToMerchantBill,
+	gotoForestPath,
+	ContinueDrinkingChoice,
+	GoToFireplaceChoice,
+	VisitTavernTableChoice,
+	BurnedToDeathChoice,
+	PickupTorchChoice,
 	GoToBarrell,
 	GoToMerchantBill,
-	PickUpApple, 
-	WalkToFountain,
-	TalkToBeggar, 
-	WalkToMerchantBill,
-	TalkToMerchantBill,
 	WalkToForest,
 	InteractWithForestPlant, 
 	WalkToForestWell, 
@@ -20,8 +31,7 @@ public enum MyChoiceLabels {
 	ReturnToMerchant,
 	InteractWithMerchant, 
 	InteractWithDungeonDoor, 
-	NoSwordInteractWithBandit,  
-	StartGameEdges,  
+	NoSwordInteractWithBandit,   
 	WalkToTavern, 
 	SitInTavern,
 	WalkToDrunkard,
@@ -36,15 +46,8 @@ public enum MyChoiceLabels {
 	BuyDrink,
 	LeaveTavern,
 	DrunkardDoor,
-	atCityEdges,
-	gotoBarrell,
-	gotoMerchantBill,
-	gotoForestPath,
-	ContinueDrinkingChoice,
-	GoToFireplaceChoice,
-	VisitTavernTableChoice,
-	BurnedToDeathChoice,
-	PickupTorchChoice,
-
+	
+	
+	
 }
 
