@@ -28,7 +28,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	 * These methods must have a BuilderMethod annotation.
 	 */
 	@BuilderMethod
-	public void rootEdges() {
+	public void rootEdges() { //Dylan
 		//Example:
 		//var root = get(NodeLabels.root.toString());
 		//var choice = new MenuChoice(MenuChoice.Options.Start);
@@ -36,33 +36,35 @@ public class MyEdgeBuilder extends NodeBuilder {
 		//root.add(new Edge(choice, nextNode));
 		var root = get(MyNodeLabels.root.toString());
 		var choice = new MenuChoice(MenuChoice.Options.Start);
-		var nextNode = get(MyNodeLabels.atCity.toString());
+		var nextNode = get(MyNodeLabels.StartGame.toString());
 		root.add(new Edge(choice, nextNode));
 		}
 	
 	@BuilderMethod
-	public void StartGameEdges() {//Jackson
-		var node = get(MyNodeLabels.root.toString());
-		var choice = new CloseNarrationChoice();
+	public void StartGameEdges() { //Dylan
+		var node = get(MyNodeLabels.StartGame.toString());
 		var nextNode = get(MyNodeLabels.atCity.toString());
+		var choice = new CloseNarrationChoice();
 		node.add(new Edge(choice, nextNode));
 
 	}
+
+	
 	
 	@BuilderMethod
-	public void atCityEdges() {//Jackson
-		var node = get(MyNodeLabels.StartGame.toString());
+	public void atCityEdges() { //Dylan
+		var node = get(MyNodeLabels.atCity.toString());
 		var nextNode1 = get(MyNodeLabels.Barrell.toString());
-		var choice1 = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.gotoBarrell.toString(),MyStoryEntities.barrell);
-		node.add(new Edge(choice1,nextNode1 ));
-		var nextNode2 =  get(MyNodeLabels.merchantbillTalk.toString());
-		var choice2 = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.gotoMerchantBill.toString(),MyStoryEntities.merchantbill);
-		node.add(new Edge(choice2,nextNode2));
+		var choice1 = new PlayerInteraction(MyChoiceLabels.InteractWithBarrell.toString(), MyStoryEntities.apple, Icons.apple, "Pick up apple");
+		node.add(new Edge(choice1, nextNode1));
 		
+		var nextNode2 = get(MyNodeLabels.merchantbillTalk.toString());
+		var choice2 = new PlayerInteraction(MyChoiceLabels.TalkToMerchantBill.toString(), MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
+		node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod
 	public void PickUpAppleEdges() {//Jackson
-		var node get(MyNodeLabels.Barrell.toString());
+		var node = get(MyNodeLabels.Barrell.toString());
 		var nextNode = get(MyNodeLabels.Fountain.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.PickUpApple.toString(), MyStoryEntities.apple, Icons.apple, "Pickup apple");
 		node.add(new Edge(choice, nextNode));
@@ -103,7 +105,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	@BuilderMethod
 	public void MerchantBilInteractlEdges() { //Jackson
 		var node = get(MyNodeLabels.atCity.toString());
-		var nextNode = get(MyNodeLabels.acceptAction.toString());
+		var nextNode = get(MyNodeLabels.acceptActions.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.TalkToMerchantBill.toString(),MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
 		node.add(new Edge(choice, nextNode));
 	}
@@ -451,5 +453,4 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var choice = new MenuChoice(MenuChoice.Options.Quit);
 		node.add(new Edge(choice, nextNode)); 
 	}
-}
 }
