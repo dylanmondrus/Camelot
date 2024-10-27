@@ -33,7 +33,6 @@ public enum MyNodeLabels{
 	GoToFireplace,
 	declineActions, Retreat,
 	DeclineQuest, 
-	No,
 	ApproachDrunkard,
 	RobDrunkard, 
 	WakeDrunkard, 
@@ -58,6 +57,6 @@ public enum MyNodeLabels{
 	MerchantRetreatActions,
 	AcceptKingActions,
 	DeathActions,
-	DenyKingActions,
+	DenyKingActions, HelpDrunkard, FountainNo, LeaveBar,
 	
 }
