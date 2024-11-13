@@ -56,6 +56,10 @@ public enum MyNodeLabels{
 	MerchantRetreatActions,
 	AcceptKingActions,
 	DeathActions,
-	DenyKingActions, HelpDrunkard, FountainNo, LeaveBar, acceptActions
+	DenyKingActions, 
+	HelpDrunkard, 
+	FountainNo, 
+	LeaveBar, 
+	acceptActions
 	
 }

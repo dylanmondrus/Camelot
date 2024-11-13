@@ -36,7 +36,7 @@ public class MyNodeBuilder extends NodeBuilder {
             .add(new SetPosition(drunkard, tavern, "BackRightStool"))
             .add(new SetPosition(bartender, tavern, "Bar"))
             .add(new SetPosition(bottle, tavern, "Table"))
-            .add(new SetPosition(apple, city, "Barrell"))
+            .add(new SetPosition(apple, city, "Barrel"))
             .add(new SetPosition(littorch, tavern, "RoundTable"))
             //.add(new Face(bandit, player))
             //.add(new Draw(bandit, sword))
@@ -49,9 +49,10 @@ public class MyNodeBuilder extends NodeBuilder {
     public void StartGame() {
         var node = get(MyNodeLabels.StartGame.toString());
         node.add(new HideMenu())
-            .add(new NarrationSequence("This game is an open world game where you can visit multiple locations, interact with people, and accept quests. Your character is Doug Do Good. He has lived all his life as a peasant on a farm but has decided to leave his home in search for more adventure."))
-            .add(new HideNarration());
-        List.of("City Navigation");
+        .add(new NarrationSequence("This game is an open world game where you can visit multiple locations, interact with people, and accept quests."
+        		+ " Your character is Doug Do Good. He has lived all his life as a peasant on a farm but has decided to leave his home in search for more adventure. "
+        		+ "Inside the city square there are many places you can go to interact with objects and people."));
+            
     }
 
     private Edge HideMenu() {
@@ -61,14 +62,11 @@ public class MyNodeBuilder extends NodeBuilder {
 
     @BuilderMethod
     // Jackson
-    public void atCityActions() {
+    public void atCity() {
         var node = get(MyNodeLabels.atCity.toString());
         node.add(new HideNarration())
-            .add(new NarrationSequence("Inside the city square there are many places you can go to interact with objects and people.\n"))
-            .add(new HideNarration())
-            .add(new EnableInput());
+        .add(new EnableInput());
         // .add(new MenuChoice(MenuChoice.Options))
-        List.of("Talk to Merchant Bill", "Barrell");
     }
 
     @BuilderMethod
