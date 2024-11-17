@@ -1,3 +1,4 @@
+
 package myclassproject.mystorygraph;
 
 import static myclassproject.mystorygraph.MyStoryEntities.*;
@@ -85,7 +86,7 @@ public class MyNodeBuilder extends NodeBuilder {
     public void Fountain() {
         // Dylan
         var node = get(MyNodeLabels.Fountain.toString());
-        node.add(new WalkTo(doug, fountain))
+        node.add (new HideDialog()).add(new WalkTo(doug, fountain))
             .add(new DialogSequence(doug, beggar, List.of("I'm so hungry, can I have your apples?"), List.of("Yes", "No")))
             .add(new HideDialog());
     }
@@ -151,10 +152,14 @@ public class MyNodeBuilder extends NodeBuilder {
     public void VisitTavernTable() {
         // Dylan
         var node = get(MyNodeLabels.VisitTavernTable.toString());
-        node.add(new WalkTo(doug, taverntable))
+        node.add(new HideDialog())
+        	//.add(new WalkTo(doug, taverntable))
+        	.add(new EnableInput())
             .add(new NarrationSequence("You know you are drunk and probably should not be playing with a torch but you have a strong desire to. Do you pick up the torch?"))
+            .add(new Wait(3))
             .add(new HideNarration())
-            .add(new DialogSequence(doug, null, List.of(""), List.of("Pickup torch", "Do not pickup torch")));
+            .add(new EnableInput())
+            .add(new DialogSequence(doug, doug, List.of("You see a torch flickering enticingly nearby."), List.of("Pick up the torch", "Do not pick up the torch")));
     }
 
     @BuilderMethod
@@ -195,6 +200,7 @@ public class MyNodeBuilder extends NodeBuilder {
             .add(new LookAt(doug, fireplace))
             .add(new Die(doug))
             .add(new NarrationSequence("While walking over to the fireplace you trip and fall into the fire because you are too drunk. You burn to death."))
+            .add(new Wait(10))
             .add(new HideNarration())
             .add(new FadeOut());
     }
