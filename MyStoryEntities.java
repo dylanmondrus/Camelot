@@ -54,4 +54,5 @@ public final class MyStoryEntities {
 	public static final Place drunkardhouse = new Place("Drunkard's House",PlaceTypes.Cottage);
 	public static final Furniture drunkardhousedoor = new Furniture(drunkardhouse, FurnitureTypes.BrownHouseDoor);
 	public static final Furniture forestplant = new Furniture(forestpath, FurnitureTypes.Plant);
+	
 }

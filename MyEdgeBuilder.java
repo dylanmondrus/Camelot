@@ -153,6 +153,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice2, nextNode2));
 		
 	}
+	
 	@BuilderMethod
 	public void FirePlaceEdges() { //Jackson
 		var node = get(MyNodeLabels.GoToFireplace.toString());
@@ -164,11 +165,12 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void VisitTavernTableEdges() { //Jackson
 		var node = get(MyNodeLabels.VisitTavernTable.toString());
 		var nextNode1 = get(MyNodeLabels.PickupTorch.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
+		var choice1 = new DialogChoice("Pick up the torch");
+				//new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
 		node.add(new Edge(choice1, nextNode1));
 		var nextNode2 = get(MyNodeLabels.DontPickupTorch.toString());
-		var choice2 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Dont Pickup Torch");
-		node.add(new Edge(choice2, nextNode2));
+		var choice2 = new DialogChoice("Pick up the torch");
+		//node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod
 	public void PickupTorchEdges() { //Jackson
