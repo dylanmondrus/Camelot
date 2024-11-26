@@ -32,6 +32,7 @@ public final class MyStoryEntities {
 	public static final Item apple = new Item("Apple", ItemTypes.Apple);
 	public static final Item bottle = new Item("Beer", ItemTypes.Bottle);
 	public static final Item bag = new Item("Bag", ItemTypes.Bag);
+	public static final Furniture WestEnd = new Furniture(forestpath, FurnitureTypes.WestEnd);
 	public static final Item coin = new Item("Coin", ItemTypes.Coin);
 	public static final Item littorch = new Item("Lit Torch", ItemTypes.LitTorch);
 	public static final Item hammer = new Item("Hammer", ItemTypes.Hammer);
@@ -49,10 +50,13 @@ public final class MyStoryEntities {
 	//public static final Furniture cottageDoor = new Furniture(cottage, FurnitureTypes.Door);
 	//public static final Furniture table = new Furniture(cottage, FurnitureTypes.Table);
 	public static final Furniture dungeonDoor = new Furniture(city, FurnitureTypes.BlueHouseDoor);
+	public static final Furniture dungeonshit = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
 	public static final Furniture well = new Furniture(forestpath, FurnitureTypes.Well);
 	public static final Furniture tavernbar = new Furniture(tavern, FurnitureTypes.Bar);
 	public static final Place drunkardhouse = new Place("Drunkard's House",PlaceTypes.Cottage);
 	public static final Furniture drunkardhousedoor = new Furniture(drunkardhouse, FurnitureTypes.BrownHouseDoor);
 	public static final Furniture forestplant = new Furniture(forestpath, FurnitureTypes.Plant);
-	
+	public static final Characters king = new Characters("King", BodyTypes.F, Clothing.King, HairStyle.Short_Full, Colors.Blonde, 1); //Dylan
+	public static final Furniture cell = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
+	public static final Furniture insideDungeonDoor = new Furniture(dungeon, FurnitureTypes.Door); //Dylan
 }

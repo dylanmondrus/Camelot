@@ -29,11 +29,6 @@ public class MyEdgeBuilder extends NodeBuilder {
 	 */
 	@BuilderMethod
 	public void rootEdges() { //Dylan
-		//Example:
-		//var root = get(NodeLabels.root.toString());
-		//var choice = new MenuChoice(MenuChoice.Options.Start);
-		//var nextNode = get(NodeLabels.atCottage.toString());
-		//root.add(new Edge(choice, nextNode));
 		var root = get(MyNodeLabels.root.toString());
 		var choice = new MenuChoice(MenuChoice.Options.Start);
 		var nextNode = get(MyNodeLabels.StartGame.toString());
@@ -47,6 +42,38 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var choice = new CloseNarrationChoice();
 		node.add(new Edge(choice, nextNode));
 
+	}
+	
+	@BuilderMethod
+	public void MenuCreditsEdges() { //Dylan
+		var node = get(MyNodeLabels.root.toString());
+		var nextNode = get(MyNodeLabels.MenuShowCredits.toString());
+		var choice = new MenuChoice(MenuChoice.Options.Credits);
+		node.add(new Edge(choice, nextNode));
+	}
+	
+	@BuilderMethod
+	public void MenuResumeEdges() { //Dylan
+		var node = get(MyNodeLabels.root.toString());
+		var nextNode = get(MyNodeLabels.StartGame.toString());
+		var choice = new MenuChoice(MenuChoice.Options.Resume);
+		node.add(new Edge(choice, nextNode));
+	}
+	
+	@BuilderMethod
+	public void MenuCloseCreditsEdges() { //Dylan
+		var node = get(MyNodeLabels.MenuShowCredits.toString());
+		var nextNode = get(MyNodeLabels.MenuCloseCredits.toString());
+		var choice = new CloseCreditsChoice();
+		node.add(new Edge(choice, nextNode));
+	}
+	
+	@BuilderMethod
+	public void CloseCreditsToStartGameEdges() { //Dylan
+		var node = get(MyNodeLabels.MenuCloseCredits.toString());
+		var nextNode = get(MyNodeLabels.StartGame.toString());
+		var choice = new MenuChoice(MenuChoice.Options.Start);
+		node.add(new Edge(choice, nextNode));
 	}
 
 	
@@ -66,14 +93,14 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void PickUpAppleEdges() {//Jackson
 		var node = get(MyNodeLabels.Barrell.toString());
 		var nextNode = get(MyNodeLabels.Fountain.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.PickUpApple.toString(), MyStoryEntities.apple, Icons.apple, "Pickup apple");
+		var choice = new PlayerInteraction(MyChoiceLabels.PickUpApple.toString(), MyStoryEntities.apple, Icons.apple, "Pick up apple");
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod
 	public void GoToFountainEdges() { //Jackson
 		var node = get(MyNodeLabels.Barrell.toString());
 		var nextNode = get(MyNodeLabels.Fountain.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.WalkToFountain.toString(),MyStoryEntities.fountain);
+		var choice = new DialogChoice("Fountain");
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod
@@ -94,18 +121,11 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice2, nextNode2));	
 		
 	}
-	@BuilderMethod
-	public void WalkToMerchantBillEdges() { //Jackson
-		var node = get(MyNodeLabels.atCity.toString());
-		var nextNode = get(MyNodeLabels.merchantbillTalk.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.WalkToMerchantBill.toString(), MyStoryEntities.merchantbill);
-		node.add(new Edge(choice, nextNode));
-	}
 	
 	@BuilderMethod
 	public void MerchantBilInteractlEdges() { //Jackson
 		var node = get(MyNodeLabels.atCity.toString());
-		var nextNode = get(MyNodeLabels.acceptActions.toString());
+		var nextNode = get(MyNodeLabels.merchantbillTalk.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.TalkToMerchantBill.toString(),MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
 		node.add(new Edge(choice, nextNode));
 	}
@@ -153,7 +173,6 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice2, nextNode2));
 		
 	}
-	
 	@BuilderMethod
 	public void FirePlaceEdges() { //Jackson
 		var node = get(MyNodeLabels.GoToFireplace.toString());
@@ -165,12 +184,11 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void VisitTavernTableEdges() { //Jackson
 		var node = get(MyNodeLabels.VisitTavernTable.toString());
 		var nextNode1 = get(MyNodeLabels.PickupTorch.toString());
-		var choice1 = new DialogChoice("Pick up the torch");
-				//new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
+		var choice1 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
 		node.add(new Edge(choice1, nextNode1));
 		var nextNode2 = get(MyNodeLabels.DontPickupTorch.toString());
-		var choice2 = new DialogChoice("Pick up the torch");
-		//node.add(new Edge(choice2, nextNode2));
+		var choice2 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Dont Pickup Torch");
+		node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod
 	public void PickupTorchEdges() { //Jackson
@@ -294,7 +312,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void ForestPlantEdges() { //Dylan
 		var node = get(MyNodeLabels.ForestPlant.toString());
 		var nextNode = get(MyNodeLabels.well.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.InteractWithWell.toString(), MyStoryEntities.doug, Icons.well, "Investigate well");
+		var choice = new PlayerInteraction(MyChoiceLabels.InteractWithWell.toString(), MyStoryEntities.well, Icons.well, "Investigate well");
 		node.add(new Edge(choice, nextNode));
 	}
 	
@@ -303,6 +321,14 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var node = get(MyNodeLabels.well.toString());
 		var nextNode = get(MyNodeLabels.BanditSword.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.InteractWithBandit.toString(), MyStoryEntities.bandit, Icons.talk, "Confront bandit");
+		node.add(new Edge(choice, nextNode));
+	}
+	
+	@BuilderMethod
+	public void ConfrontBanditNoSwordEdges() {
+		var node = get(MyNodeLabels.ConfrontBandit.toString());
+		var nextNode = get(MyNodeLabels.ForestPlant.toString());
+		var choice = new DialogChoice("No I am not");
 		node.add(new Edge(choice, nextNode));
 	}
 	
@@ -323,7 +349,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void KillBanditEdges() { //Dylan
 		var node = get(MyNodeLabels.KillBandit.toString());
 		var nextNode = get(MyNodeLabels.MerchantKill.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.ReturnToMerchant.toString(), MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
+		var choice = new PlayerInteraction(MyStoryEntities.doug ,MyChoiceLabels.ReturnToMerchant.toString(),MyStoryEntities.forestexit);
 		node.add(new Edge(choice, nextNode));
 	}
 	
@@ -331,11 +357,11 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void MerchantKillActionsEdges() { //Dylan
 		var node = get(MyNodeLabels.MerchantKill.toString());
 		var nextNode1 = get(MyNodeLabels.Interupt.toString());
-		var choice1 = new DialogChoice("Interrupt");
+		var choice1 = new DialogChoice("Confess");
 		node.add(new Edge(choice1, nextNode1));
 		
 		var nextNode2 = get(MyNodeLabels.Listen.toString());
-		var choice2 = new DialogChoice("Listen");
+		var choice2 = new DialogChoice("Lie");
 		node.add(new Edge(choice2, nextNode2));
 	}
 	
@@ -349,26 +375,20 @@ public class MyEdgeBuilder extends NodeBuilder {
 	
 	@BuilderMethod
 	public void OpenDungeonDoorEdges() { //Dylan
-		var node = get(MyNodeLabels.Interupt.toString());
-		var nextNode = get(MyNodeLabels.Dungeon.toString());
+		var node = get(MyNodeLabels.Dungeon.toString());
+		var nextNode = get(MyNodeLabels.Ending.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.InteractWithDungeonDoor.toString(), MyStoryEntities.dungeonDoor, Icons.door, "Enter dungeon");
 		node.add(new Edge(choice, nextNode));
 	}
 	
-	@BuilderMethod
-	public void DungeonActionsEdges() { //Dylan
-		var node = get(MyNodeLabels.Dungeon.toString());
-		var nextNode = get(MyNodeLabels.EndGame.toString());
-		var choice = new DialogChoice("Game Over");
-		node.add(new Edge(choice, nextNode));
+	
 		
-	}
 	
 	@BuilderMethod
 	public void DungeonActionsEndGameEdges() { //Dylan
-		var node = get(MyNodeLabels.EndGame.toString());
-		var nextNode = get(MyNodeLabels.EndGame.toString());
-		var choice = new MenuChoice(MenuChoice.Options.Quit);
+		var node = get(MyNodeLabels.Dungeon.toString());
+		var nextNode = get(MyNodeLabels.Ending.toString());
+		var choice = new CloseCreditsChoice();
 		node.add(new Edge(choice, nextNode));
 	}
 	
@@ -389,41 +409,24 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void DeclineOfferEdges() { //Dylan
 		var node = get(MyNodeLabels.DenyKing.toString());
 		var nextNode = get(MyNodeLabels.EndGame.toString());
-		var choice = new DialogChoice("End Game");
+		var choice = new CloseCreditsChoice();
 		node.add(new Edge(choice, nextNode));
 	}
 	
-	@BuilderMethod
-	public void DeclineOfferEndGameEdges() { // Dylan
-		//Killed bandit, offered to be king, declined
-		var node =  get(MyNodeLabels.EndGame.toString());
-		var nextNode = get(MyNodeLabels.EndGame.toString());//What is the last node?
-		var choice = new MenuChoice(MenuChoice.Options.Quit);
-		node.add(new Edge(choice, nextNode));
-	}
+
 	
 	@BuilderMethod
-	public void AcceptOfferEdges() { //Dylan
+	public void KillBanditAcceptOfferCredits() {
 		var node = get(MyNodeLabels.AcceptOffer.toString());
 		var nextNode = get(MyNodeLabels.End.toString());
-		var choice = new DialogChoice("End Game");
-		node.add(new Edge(choice, nextNode));
-		
-	}
-	
-	@BuilderMethod
-	public void AcceptOfferEndGameEdges() { //Dylan
-		//Killed bandit, offered to be king, accepted
-		var node = get(MyNodeLabels.End.toString());
-		var nextNode = get(MyNodeLabels.End.toString());//What is the last node?
-		var choice = new MenuChoice(MenuChoice.Options.Quit);
+		var choice = new CloseCreditsChoice();
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod
 	public void BanditRetreatInteractMerchantEdges() { //Dylan
 		var node = get(MyNodeLabels.Retreat.toString());
 		var nextNode = get(MyNodeLabels.MerchantRetreat.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.InteractWithMerchant.toString(), MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
+		var choice = new PlayerInteraction(MyStoryEntities.doug ,MyChoiceLabels.ReturnToMerchant.toString(),MyStoryEntities.forestexit);
 		node.add(new Edge(choice, nextNode));
 	}
 	
@@ -432,27 +435,32 @@ public class MyEdgeBuilder extends NodeBuilder {
 		//Is the previous node retreat?
 		var node = get(MyNodeLabels.MerchantRetreat.toString());
 		var nextNode1 = get(MyNodeLabels.AcceptKing.toString());
-		var choice1 = new DialogChoice("I accept");
+		var choice1 = new DialogChoice("Become king");
 		node.add(new Edge(choice1, nextNode1));
 		
 		var nextNode2 = get(MyNodeLabels.Death.toString());
-		var choice2 = new DialogChoice("I decline");
+		var choice2 = new DialogChoice("Decline offer");
 		node.add(new Edge(choice2, nextNode2));
 	}
 	
 	@BuilderMethod
 	public void RetreatAcceptKingEdges() { //Dylan
 		var node = get(MyNodeLabels.AcceptKing.toString());
-		var nextNode = get(MyNodeLabels.AcceptKing.toString()); //What is the last node?
-		var choice = new MenuChoice(MenuChoice.Options.Quit);
+		var nextNode = get(MyNodeLabels.RetreatAcceptKingCredits.toString()); //What is the last node?
+		var choice = new CloseCreditsChoice();
 		node.add(new Edge(choice, nextNode));
 	}
 	
 	@BuilderMethod
 	public void RetreatDenyKingEdges() { //Dylan
 		var node = get(MyNodeLabels.Death.toString()); //What is the last node?
-		var nextNode = get(MyNodeLabels.Death.toString());
-		var choice = new MenuChoice(MenuChoice.Options.Quit);
+		var nextNode = get(MyNodeLabels.RetreatDeclineOfferCredits.toString());
+		var choice = new CloseCreditsChoice();
 		node.add(new Edge(choice, nextNode)); 
 	}
+	
+	
 }
+
+
+

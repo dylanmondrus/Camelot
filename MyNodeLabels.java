@@ -53,13 +53,19 @@ public enum MyNodeLabels{
 	Death, 
 	DenyKing,
 	EndGame, 
-	MerchantRetreatActions,
-	AcceptKingActions,
+	MerchantRetreatActions, //Dylan
+	AcceptKingActions, 
 	DeathActions,
 	DenyKingActions, 
 	HelpDrunkard, 
 	FountainNo, 
 	LeaveBar, 
-	acceptActions
+	acceptActions,
+	MenuShowCredits, //Dylan
+	MenuCloseCredits, //Dylan
+	MenuResume, //Dylan
+	RetreatAcceptKingCredits, //Dylan
+	RetreatDeclineOfferCredits, //Dylan
+	
 	
 }

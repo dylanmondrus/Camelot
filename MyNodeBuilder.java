@@ -1,4 +1,3 @@
-
 package myclassproject.mystorygraph;
 
 import static myclassproject.mystorygraph.MyStoryEntities.*;
@@ -21,27 +20,29 @@ public class MyNodeBuilder extends NodeBuilder {
      */
     @BuilderMethod
     // Jackson
-    public void rootActions() {
+    public void rootActions() {//Dylan
         var root = get(MyNodeLabels.root.toString());
-        root.add(new CreateAll(List.of(city, tavern, forestpath, apple, sword, littorch, bottle, coin, hammer, bag)))
+        root.add(new CreateAll(List.of(city, dungeon, tavern, forestpath, apple, sword, littorch, bottle, coin, hammer, bag)))
             .add(new CreateCharacterSequence(doug))
             .add(new CreateCharacterSequence(merchantbill))
             .add(new CreateCharacterSequence(bandit))
             .add(new CreateCharacterSequence(beggar))
             .add(new CreateCharacterSequence(drunkard))
             .add(new CreateCharacterSequence(bartender))
+            .add(new CreateCharacterSequence(king))
             .add(new SetPosition(doug, city))
             .add(new SetPosition(bandit, forestpath, "DirtPile"))
-            .add(new SetPosition(merchantbill, city, "Bench"))
+            .add(new SetPosition(merchantbill, city, "Plant"))
             .add(new SetPosition(beggar, city, "Fountain"))
             .add(new SetPosition(drunkard, tavern, "BackRightStool"))
             .add(new SetPosition(bartender, tavern, "Bar"))
             .add(new SetPosition(bottle, tavern, "Table"))
             .add(new SetPosition(apple, city, "Barrel"))
             .add(new SetPosition(littorch, tavern, "RoundTable"))
-            //.add(new Face(bandit, player))
-            //.add(new Draw(bandit, sword))
+            .add(new Face(doug, merchantbill))
             .add(new SetCameraFocus(doug))
+            .add(new PlaySound("Kingdom"))
+            .add(new SetTitle("The Adventures of Doug Do Good"))
             .add(new ShowMenu());
     }
 
@@ -50,11 +51,24 @@ public class MyNodeBuilder extends NodeBuilder {
     public void StartGame() {
         var node = get(MyNodeLabels.StartGame.toString());
         node.add(new HideMenu())
-        .add(new NarrationSequence("This game is an open world game where you can visit multiple locations, interact with people, and accept quests."
+        .add(new NarrationSequence("This is an open world game where you can visit multiple locations, interact with people, and accept quests."
         		+ " Your character is Doug Do Good. He has lived all his life as a peasant on a farm but has decided to leave his home in search for more adventure. "
-        		+ "Inside the city square there are many places you can go to interact with objects and people."));
+        		+ "Inside the city square there are many places you can go and people you can meet."));
             
     }
+    
+    @BuilderMethod
+    public void MenuShowCredits() { //Dylan
+    	var node = get(MyNodeLabels.MenuShowCredits.toString());
+    	node.add(new CreditsSequence("Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch. Course: CMPS 1600"));
+    }
+    @BuilderMethod
+    public void MenuCloseCredits() { //Dylan
+    	var node = get(MyNodeLabels.MenuCloseCredits.toString());
+    	node.add(new HideCredits())
+    	.add(new ShowMenu());
+    }
+    
 
     private Edge HideMenu() {
         // TODO Auto-generated method stub
@@ -74,20 +88,20 @@ public class MyNodeBuilder extends NodeBuilder {
     public void Barrell() {
         // Dylan
         var node = get(MyNodeLabels.Barrell.toString());
-        node.add(new WalkTo(doug, barrell))
+        node.add(new HideDialog()).add(new WalkTo(doug, barrell))
             .add(new HideNarration())
             .add(new EnableInput())
             .add(new Pickup(doug, apple))
             .add(new Face(doug, fountain))
-            .add(new DialogSequence(doug, beggar, List.of("At the barrell there is an apple. You pick them up but do not eat them. The lovely fountain captures your eye."), List.of("Fountain")));
+            .add(new DialogSequence(doug, beggar, List.of("At the barrell there is an apple. You pick it up but do not eat it. The lovely fountain captures your eye."), List.of("Fountain")));
     }
 
     @BuilderMethod
     public void Fountain() {
         // Dylan
         var node = get(MyNodeLabels.Fountain.toString());
-        node.add (new HideDialog()).add(new WalkTo(doug, fountain))
-            .add(new DialogSequence(doug, beggar, List.of("I'm so hungry, can I have your apples?"), List.of("Yes", "No")))
+        node.add(new HideDialog()).add(new WalkTo(doug, fountain))
+            .add(new DialogSequence(doug, beggar, List.of("I'm so hungry, can I have your apple?"), List.of("Yes", "No")))
             .add(new HideDialog());
     }
 
@@ -152,14 +166,10 @@ public class MyNodeBuilder extends NodeBuilder {
     public void VisitTavernTable() {
         // Dylan
         var node = get(MyNodeLabels.VisitTavernTable.toString());
-        node.add(new HideDialog())
-        	//.add(new WalkTo(doug, taverntable))
-        	.add(new EnableInput())
+        node.add(new WalkTo(doug, taverntable))
             .add(new NarrationSequence("You know you are drunk and probably should not be playing with a torch but you have a strong desire to. Do you pick up the torch?"))
-            .add(new Wait(3))
             .add(new HideNarration())
-            .add(new EnableInput())
-            .add(new DialogSequence(doug, doug, List.of("You see a torch flickering enticingly nearby."), List.of("Pick up the torch", "Do not pick up the torch")));
+            .add(new DialogSequence(doug, null, List.of(""), List.of("Pickup torch", "Do not pickup torch")));
     }
 
     @BuilderMethod
@@ -200,7 +210,6 @@ public class MyNodeBuilder extends NodeBuilder {
             .add(new LookAt(doug, fireplace))
             .add(new Die(doug))
             .add(new NarrationSequence("While walking over to the fireplace you trip and fall into the fire because you are too drunk. You burn to death."))
-            .add(new Wait(10))
             .add(new HideNarration())
             .add(new FadeOut());
     }
@@ -210,214 +219,261 @@ public class MyNodeBuilder extends NodeBuilder {
 
 
 @BuilderMethod // Joshua
-public void merchantbillTalkActions() {
+public void merchantbillTalkActions() { //Dylan
 	var node = get(MyNodeLabels.merchantbillTalk.toString());
-	node.add(new WalkTo(doug, merchantbill))
-	.add(new HideNarration()).add(new EnableInput())
-	.add(new DialogSequence(doug, merchantbill, List.of("Greeting, I am Merchant Bill."
-			+ " I have no goods to sell you because I was vicously beaten and robbed by bandits."
-			+ " They stole by precious and valuable bag filled with items."
-			+ " I would do anything to get it back but I am just an old man who can not confront the bandits please help me."
-			+ " Would you be so kind to help me. You will be rewarded handsomely If you help me."),
-			List.of("Accept Quest", "Decline Quest")));
+	node.add(new HideNarration()).add(new EnableInput())
+	.add(new DialogSequence(merchantbill, doug, List.of("Greetings I am Merchant Bill. I have no goods to sell you because I was vicously beaten and robbed by bandits. They stole my precious and valuable bag filled with items. I would do anything to get it back but I am just an old man who can not confront the bandits please help me. Would you be so kind to help me. You will be handsomely rewarded."),List.of("Accept Quest", "Decline Quest")));
 }
 @BuilderMethod //Joshua
-public void acceptActions() {
+public void acceptActions() { //Dylan
 	var node = get(MyNodeLabels.acceptActions.toString());
-	node.add(new WalkTo(doug, cityExit)).add(new HideDialog()).add(new EnableInput()).add(new Exit(doug, cityExit, true));
+	node.add(new HideDialog()).add(new WalkTo(doug, cityExit)).add(new EnableInput());
 	
 }
 @BuilderMethod //Joshua
-public void atForestPathActions() {
+public void atForestPathActions() { //Dylan
 	var node = get(MyNodeLabels.atForestPath.toString());
-	node.add(new FadeIn())
-	.add(new NarrationSequence("In the forest path you notice a well a Bandit, a plant."));
+	node.add(new SetPosition(doug, forestexit))
+	.add(new FadeIn())
+	.add(new NarrationSequence("In the forest path you notice a well a Bandit, a plant."))
+	.add(new Wait(3))
+	.add(new HideNarration())
+	.add(new EnableInput());
 }
 
 
 @BuilderMethod // Joshua
-public void ConfrontBanditActions() {
+public void ConfrontBanditActions() { //Dylan
 	var node = get(MyNodeLabels.ConfrontBandit.toString());
-	node.add(new HideNarration()).add(new WalkTo(doug,bandit)).add(new EnableInput()).add(new NarrationSequence("When you confront the bandit and ask for the merchants stolen cargo he threatens you with a hammer."))
+	node.add(new HideNarration()).add(new EnableInput()).add(new NarrationSequence("When you confront the bandit and ask for the merchants stolen cargo he threatens you with a hammer."))
+	.add(new Wait(3))
+	.add(new HideNarration())
 	.add(new Draw(bandit,hammer))
 	.add(new DialogSequence(bandit, doug, List.of("Are you willing to get your brains smashed out for this cargo?"), List.of("No I am not")));
 }
 	
 @BuilderMethod // Joshua 
-public void ForestPlantActions() {
+public void ForestPlantActions() { //Dylan
 	var node = get(MyNodeLabels.ForestPlant.toString());
-	node.add(new HideNarration()).add(new Kneel(doug)).add(new NarrationSequence("You are amazed by the plant and get distracted for a moment "
-	+ "but you refocus on the mission at hand"))
-	.add(new WalkTo( doug, well));
+	node.add(new HideDialog()).add(new WalkTo(doug, forestplant)).add(new Kneel(doug)).add(new NarrationSequence("You are amazed by the plant and get distracted for a moment "
+	+ "but you refocus on the mission at hand.")).add(new Wait(3)).add(new HideNarration())
+	.add(new WalkTo(doug, well));
 	
 }
 @BuilderMethod //Joshua
-public void wellActions() {
+public void wellActions() { //Dylan
 	var node = get(MyNodeLabels.well.toString());
-	node.add(new HideNarration()).add(new NarrationSequence("While at the well you discover a sword in the bottom of it."
-			+ " Pick up the sword, and confront the bandit.")).add(new EnableInput()).add(new Pickup(doug, sword))
+	node.add(new HideNarration()).add(new NarrationSequence("While at the well you discover a sword at the bottom of it."
+			+ " Pick up the sword, and confront the bandit.")).add(new Wait(3)).add(new HideNarration()).add(new EnableInput()).add(new Pickup(doug, sword))
 	.add(new WalkTo(doug,bandit));
 }
 @BuilderMethod  //Joshua
-public void BanditSwordActions() {
+public void BanditSwordActions() { //Dylan
 	var node = get(MyNodeLabels.BanditSword.toString());
-	node.add(new HideNarration()).add(new DialogSequence(doug, bandit, List.of("I have a sword and I am not afraid yo use it. Are you really willing to die for this cargo?"),
-	List.of("I have a sword and I am not afraid yo use it. Are you really willing to die for this cargo?"))
-	.add(new HideDialog()).add(new DialogSequence(bandit, doug,List.of("Bring it on"),List.of("Kill Bandit", "Retreat"))));
+	node.add(new HideNarration()).add(new DialogSequence(doug, bandit, List.of("I have a sword and I am not afraid to use it. Are you really willing to die for this bag?"),List.of("Kill Bandit", "Retreat")));
 	
 }
 @BuilderMethod //Joshua
-public void KillBanditActions() {
+public void KillBanditActions() { //Dylan
 	var node = get(MyNodeLabels.KillBandit.toString());
-	node.add(new NarrationSequence("You swiftly murdered the gaurd with your sword, and take the cargo, "
-	+ "but you have broken your morals you are no longer a good man."))
-	.add(new HideNarration())
+	node.add(new HideDialog())
 	.add(new Draw(doug, sword))
 	.add(new Attack(doug, bandit))
 	.add(new Die(bandit))
-	.add(new Take(doug, bag))
+	.add(new NarrationSequence("You swiftly murdered the bandit with your sword, and take the bag, but you have broken your morals you are no longer a good man."))
+	.add(new Wait(3))
+	.add(new HideNarration())
+	.add(new Pocket(doug, sword))
+    .add(new SetPosition(bag, forestpath, "DirtPile"))
+	.add(new Pickup(doug, bag))
+	.add(new NarrationSequence("You return to the merchant to return his bag."))
+	.add(new Wait(3))
+	.add(new HideNarration())
 	.add(new WalkTo(doug, forestexit))
-	.add(new Exit(doug, forestexit, true));	
+	.add(new EnableInput());
 }
 @BuilderMethod //Joshua
-public void RetreatActions() {
+public void RetreatActions() { //Dylan
 var node = get(MyNodeLabels.Retreat.toString());
-node.add(new FadeIn())
-.add(new NarrationSequence("As Doug Do Good you have sworn to never harm anybody and you will not fold your morals for money. "
+node.add(new HideDialog()).add(new NarrationSequence("As Doug Do Good you have sworn to never harm anybody and you will not fold your morals for money. "
 + "Although you may not have gotten the poor old Merchant Bill's goods you still have your pride and morals."))
-.add(new FadeOut()).add(new WalkTo(doug, forestexit))
-.add(new Exit(doug, forestexit, true));
+.add(new Wait(3))
+.add(new HideNarration())
+.add(new WalkTo(doug, forestexit))
+.add(new EnableInput());
 }
 
 @BuilderMethod //Joshua
-public void MerchantRetreatActions() {
+public void MerchantRetreatActions() { //Dylan
 	var node = get(MyNodeLabels.MerchantRetreat.toString());
-	node.add(new HideDialog())
-	.add(new FadeIn()).add(new WalkTo(doug, merchantbill))
-	.add(new DialogSequence(doug, merchantbill, List.of("I have failed to retrieve your cargo because I did not want to kill the bandit"), List.of("Return to City"))
-	.add(new DialogSequence(merchantbill, doug, List.of("It is ok Dan Do Good. I am the king and I have no heirs to my throne."
-	+ " I posed as a beggar merchant in need to see who has a kind enough heart to rule the city. "
-	+ "I appoint you Dan Do Good as the heir to my throne lead well my friend. "
-	+ "A good king can not fold on their morals and I see that you will not"), List.of("I accpet", "I dont"))));
+	node.add(new SetPosition(doug, cityExit))
+	.add(new WalkTo(doug, merchantbill))
+	.add(new DialogSequence(doug, merchantbill, List.of("I have failed to retrieve your cargo because I did not want to kill the bandit."), List.of(" "))
+	.add(new Wait(3))
+	.add(new HideDialog())
+	.add(new SetPosition(merchantbill))
+	.add(new SetPosition(king, city, "Plant"))
+	.add(new Face(king, doug))
+	.add(new DialogSequence(king, doug, List.of("It is ok Doug. I am the king and I have no heirs to my throne."
+	+ " I posed as a merchant in need to see who has a kind enough heart to rule the city. "
+	+ "I appoint you Doug Do Good as the heir to my throne lead well my friend. "
+	+ "A good king can not fold on their morals and I see that you will not"), List.of("Become king", "Decline offer"))));
 }
 @BuilderMethod// Joshua Start working here
-public void AcceptKingActions() {
+public void AcceptKingActions() { //Dylan
 	var node = get(MyNodeLabels.AcceptKing.toString());
-	node.add(new Die(doug));
+	node.add(new HideDialog())
+	.add(new NarrationSequence("You become king of the Kingdom of Camelot and are remembered as a benevolent and passive ruler. The End."))
+	.add(new Wait(5))
+	.add(new HideNarration())
+	.add(new CreditsSequence("Credits: Dylan Mondrus, Jackson Burch, Joshua Burch. Course: CMPS 1600"));
+	
+			
 }
+
+@BuilderMethod
+public void RetreatAcceptKingCredits() { //Dylan
+	var node = get(MyNodeLabels.RetreatAcceptKingCredits.toString());
+	node.add(new HideCredits())
+	.add(new ShowMenu());
+}
+
 @BuilderMethod// Joshua
-public void DeathActions() {
+public void DeathActions() { //Dylan
 	var node = get(MyNodeLabels.Death.toString());
 	node.add(new HideDialog())
-	.add(new NarrationSequence("You are remeber as being to kind to be king."
-	+ " You die a good man and that is all that ever mattered to you"))
+	.add(new NarrationSequence("You are remembered as being too kind to be king."
+	+ " You die a good man and that is all that ever mattered to you."))
+	.add(new Wait(5))
+	.add(new HideNarration())
 	.add(new FadeOut())
-	.add(new CreditsSequence("Thank you for playing our game!//n"
-	+ "Contributors: Joshua Burch, Jackson Burch, Joshua Burch"));
+	.add(new CreditsSequence("Thank you for playing our game!"
+	+ "Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch. Course: CMPS 1600."));
 }
+
+@BuilderMethod
+public void RetreatDeclineOfferCredits() { //Dylan
+	var node = get(MyNodeLabels.RetreatDeclineOfferCredits.toString());
+	node.add(new HideCredits())
+	.add(new ShowMenu());
+}
+
 @BuilderMethod//Joshua
-public void DenyKingActions() {
+public void DenyKingActions() { //Dylan
 	var node = get(MyNodeLabels.DenyKing.toString());
-	node.add(new DialogSequence(doug, merchantbill, List.of("I'm sorry, but I can not rule I am afraid"
-	+ " that the power would change me and force me"
-	+ " to make hard decisions that may force me to harm others"), List.of("End Game")));
-}
-@BuilderMethod // Joshua 
-public void EndGameActions() {
-	var node = get(MyNodeLabels.EndGame.toString());
-	node.add(new HideDialog())
+	node.add(new DialogSequence(doug, king, List.of("I'm sorry, but I can not rule. I am afraid"
+	+ " that the power would change me and force me to harm others"), List.of(" ")))
+	.add(new Wait(3))
+	.add(new HideDialog())
 	.add(new NarrationSequence("Although you are not king you are still a good man"
 	+ " and that is all that has ever mattered to you."))
+	.add(new Wait(3))
 	.add(new HideNarration())
 	.add(new FadeOut())
-	.add(new NarrationSequence("You Win"))
-	.add(new HideNarration())
-	.add(new CreditsSequence("Thank you for playing our game!/n"
-	+ "Contributors: Joshua Burch, Jackson Burch, Joshua Burch"));
+	.add(new CreditsSequence("Thank you for playing our game!"
+	+ "Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch"));
+}
+@BuilderMethod // Joshua 
+public void KillBanditDeclineOfferCredits() { //Dylan
+	var node = get(MyNodeLabels.EndGame.toString());
+	node.add(new HideCredits())
+	.add(new ShowMenu());
 }
 	
 
 	
 
 @BuilderMethod //Joshua
-public void  MerchantKillActions() {
+public void  MerchantKillActions() { //Dylan
 var node = get(MyNodeLabels.MerchantKill.toString());
-node.add(new FadeIn())
-.add(new NarrationSequence("You return to Merchant Bill and return his cargo.")
+node.add(new SetPosition(doug, cityExit))
 .add(new WalkTo(doug,merchantbill))
 .add(new Give(doug,bag,merchantbill))
-.add(new DialogSequence(merchantbill, doug, List.of("Thank you for retriving my cargo"
-+ " you have the urge to interupt him and confess that you killed Bandit."),
-List.of("Interupt", "Listen"))));
+.add(new DialogSequence(merchantbill, doug, List.of("Thank you for retriving my cargo! But why is there blood on you?"),List.of("Confess", "Lie")));
+
 
 }
 
 @BuilderMethod //Joshua
-public void InetruptActions() {
+public void InetruptActions() { //Dylan
 	var node = get(MyNodeLabels.Interupt.toString());
-	node.add(new HideNarration())
-	.add(new NarrationSequence("You confess to killing the bandit")
-	.add(new DialogSequence(merchantbill, doug, List.of("I posed as the a beggar Merchant to see if I could find an heir"
-	+ " to my throne since i have none. You have failed me Doug Do Good."
+	node.add(new HideDialog())
+	.add(new DialogSequence(doug, merchantbill, List.of("I KILLED THE BANDIT! I'm sorry I just wanted to get you your bag."), List.of(" ")))
+	.add(new Wait(5))
+	.add(new HideDialog())
+	.add(new SetPosition(merchantbill))
+	.add(new SetPosition(king, city, "Plant"))
+	.add(new DialogSequence(king, doug, List.of("I posed as a merchant to see if I could find an heir"
+	+ " to my throne since I have none. I have been watching you to see if you would be a good fit for king but since you killed the bandit you have failed me Doug Do Good."
 	+ " As king I must punish you for murder. You will be sentenced to life locked in the dungeon."),
-	List.of("Dungeon"))).add(new WalkTo(doug,dungeonDoor)).add(new Exit(doug, dungeonDoor, true)));
+	List.of("Dungeon")));
 }
 @BuilderMethod //Joshua
-public void ListenActions() {
+public void ListenActions() { //Dylan
 	var node = get(MyNodeLabels.Listen.toString());
-	node.add(new HideNarration())
-	.add(new HideDialog())
-	.add(new FadeIn())
-	.add(new DialogSequence(merchantbill, doug, List.of("Doug Do Good I am the king and I have no heirs to my throne."
-	+ " I posed as a beggar merchant in need to see who has a kind enough heart to rule the city."
-	+ " I appoint you Dan Do Good as the heir to my throne lead well my friend. "
-	+ "A good king can not fold on their morals and I see that you will not"), List.of("Accept Offer", "Decine Offer")));
+	node.add(new DialogSequence(doug, merchantbill, List.of("Oh the blood? I...uh...cut myself while chopping down a tree."), List.of(" ")))
+	.add(new Wait(5))
+	.add(new SetPosition(merchantbill))
+	.add(new SetPosition(king, city, "Plant"))
+	.add(new DialogSequence(king, doug, List.of("Doug Do Good I am the king and I have no heirs to my throne."
+	+ " I posed as a merchant to see who has a kind enough heart to rule the city."
+	+ " I appoint you Doug Do Good as the heir to my throne. Lead well my friend. "
+	+ "A good king can not fold on their morals and I see that you will not"), List.of("Accept Offer", "Decline Offer")));
 }
 @BuilderMethod // Joshua --> roll credits
-public void AcceptOfferActions() {
+public void AcceptOfferActions() { //Dylan
 	var node = get(MyNodeLabels.AcceptOffer.toString());
 	node.add(new HideDialog())
-	.add(new NarrationSequence("The power got to your head and you were known as being a ruthless leader."
+	.add(new NarrationSequence("The power got to your head and you became a ruthless leader."
 	+ " You were cruel to your people and vicious on the battle field. "
 	+ "After you killed the Bandit your morals were compromised and you were blood thirsty."
-	+ " You died doing what you loved, killing in the battle field."))
-	.add(new Die(doug));
-	
+	+ " You died doing what you loved-killing in the battle field."))
+	.add(new Wait(5))
+	.add(new HideNarration())
+	.add(new Die(doug))
+	.add(new HideNarration())
+	.add(new FadeOut())
+	.add(new CreditsSequence("Thank you for playing our game!"
+			+ "Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch. Course: CMPS 1600"));
 }
 @BuilderMethod // Joshua --> Fade Credits
-public void EndActions() {
+public void KillBanditAcceptOfferCredits() { //Dylan
 	var node = get(MyNodeLabels.End.toString());
-	node.add(new HideNarration())
-	.add(new NarrationSequence("Although you became king you changed your morals changed and you were no longer a good man.\n"
-	+ "You lose")).add(new FadeOut()).add(new CreditsSequence("Thank you for playing our game!//n"
-			+ "Contributors: Joshua Burch, Jackson Burch, Joshua Burch"));
+	node.add(new HideCredits())
+	.add(new ShowMenu());
 }
 @BuilderMethod // Joshua
-public void DungeonActions() {
+public void DungeonActions() { //DUNGEON WONT RENDER //Dylan
 	var node = get (MyNodeLabels.Dungeon.toString());
-	node.add(new HideNarration())
+	node.add(new HideDialog())
+	.add(new WalkTo(doug,dungeonDoor))
+	.add(new Exit(doug, dungeonDoor, false))
+	//.add(new SetPosition(doug, dungeon, "DirtPile"))
+	.add(new FadeIn())
 	.add(new NarrationSequence("In prison you think of that day and how you killed that man. "
-	+ "It is all that you think about, it haunts you. "
-	+ "You die in prison knowing that you are a bad man"))
-	.add(new Die(doug));
+	+ "It is all that you think about and it haunts you. "
+	+ "You die in prison knowing that you are a bad man."))
+	.add(new Wait(3))
+	.add(new HideNarration())
+	.add(new Die(doug))
+	.add(new CreditsSequence("Thank you for playing our game!"
+	+ "Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch. Course: CMPS 1600."));
 }
 @BuilderMethod // Joshua
-public void EndingActions() {
+public void EndingActions() { //Dylan
 	var node = get(MyNodeLabels.Ending.toString());
-	node.add(new HideNarration())
-	.add(new NarrationSequence("You folded your morals and became a bad man.\n"
-	+ "You lose")).add(new FadeOut())
-	.add(new CreditsSequence("Thank you for playing our game!/n"
-	+ "Contributors: Joshua Burch, Jackson Burch, Joshua Burch"));
+	node.add(new HideCredits())
+	.add(new ShowMenu());
 }
 //Jacksons Work Downward
 @BuilderMethod
-public void DeclineQuest() {
+public void DeclineQuest() { //Dylan
     var node = get(MyNodeLabels.DeclineQuest.toString());
-    node.add(new DialogSequence(doug, merchantbill, List.of(
-            "I have a sword and I am not afraid to use it. Are you really willing to die for this cargo?"), 
-            List.of("Barrel"))
-        .add(new HideDialog()));
+    node.add(new DialogSequence(doug, merchantbill, List.of("I'm sorry but I can't help you. Goodbye"), List.of(" ")))
+    .add(new Wait(3))
+    .add(new HideDialog())
+    .add(new EnableInput())
+    .add(new WalkTo(doug, barrell));
 }
 @BuilderMethod
 public void FountainNo() {
@@ -509,4 +565,12 @@ public void Conclusion() {
             + "You were a good man and saved him. You win."))
     .add(new HideNarration());
 }
+
+
+
+
 }
+
+
+
+
