@@ -2,11 +2,26 @@ package myclassproject.main;
 
 import com.storygraph.Story;
 
-import myclassproject.questexample.NodeLabels;
-import myclassproject.questexample.QuestGraph;
+import myclassproject.mystorygraph.MyChoiceLabels;
+import myclassproject.mystorygraph.MyEdgeBuilder;
 import myclassproject.mystorygraph.MyGraph;
-import myclassproject.testgraph.JacksonTestGraph2;
-import myclassproject.testgraph.TestGraph;
+import myclassproject.mystorygraph.MyNodeBuilder;
+import myclassproject.mystorygraph.MyNodeLabels;
+import myclassproject.mystorygraph.MyStoryEntities;
+import myclassproject.testgraph.DylanEdgeBuilder;
+import myclassproject.testgraph.DylanNodeBuilder;
+import myclassproject.testgraph.DylanTestGraph;
+import myclassproject.testgraph.DylanEdgeBuilder2;
+import myclassproject.testgraph.DylanNodeBuilder2;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -17,8 +32,7 @@ public class MainClass {
 		//Create an object of your story class.
 		var story = new Story();
 		//Simply call run.
-		story.Run(new JacksonTestGraph2(NodeLabels.root));
-		
+		story.Run(new MyGraph());
 	}
 
 }
