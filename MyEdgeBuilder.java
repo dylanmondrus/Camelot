@@ -28,7 +28,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	 * These methods must have a BuilderMethod annotation.
 	 */
 	@BuilderMethod
-	public void rootEdges() { //Dylan
+	public void rootEdges() { //DYLAN WORK START
 		var root = get(MyNodeLabels.root.toString());
 		var choice = new MenuChoice(MenuChoice.Options.Start);
 		var nextNode = get(MyNodeLabels.StartGame.toString());
@@ -88,258 +88,6 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var nextNode2 = get(MyNodeLabels.merchantbillTalk.toString());
 		var choice2 = new PlayerInteraction(MyChoiceLabels.TalkToMerchantBill.toString(), MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
 		node.add(new Edge(choice2, nextNode2));
-	}
-	@BuilderMethod
-	public void PickUpAppleEdges() {//Jackson
-		var node = get(MyNodeLabels.Barrell.toString());
-		var nextNode = get(MyNodeLabels.Fountain.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.PickUpApple.toString(), MyStoryEntities.apple, Icons.apple, "Pickup apple");
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void GoToFountainEdges() { //Jackson
-		var node = get(MyNodeLabels.Barrell.toString());
-		var nextNode = get(MyNodeLabels.Fountain.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.WalkToFountain.toString(),MyStoryEntities.fountain);
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void InteractBeggar() { //Joshua
-		var node = get(MyNodeLabels.Fountain.toString());
-		var nextNode = get(MyNodeLabels.Fountain.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.TalkToBeggar.toString(), MyStoryEntities.beggar, Icons.talk, "Talk to Beggar");
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void TalTalkToBeggarEdge() { //Joshua
-		var node = get(MyNodeLabels.Fountain.toString());
-		var choice1 = new DialogChoice("Yes, here is an apple");
-		var nextNode1 = get(MyNodeLabels.FountainYes.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new DialogChoice("Get job you filthy beggar");
-		var nextNode2 = get(MyNodeLabels.FountainNo.toString());
-		node.add(new Edge(choice2, nextNode2));	
-		
-	}
-	@BuilderMethod
-	public void WalkToMerchantBillEdges() { //Jackson
-		var node = get(MyNodeLabels.atCity.toString());
-		var nextNode = get(MyNodeLabels.merchantbillTalk.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.WalkToMerchantBill.toString(), MyStoryEntities.merchantbill);
-		node.add(new Edge(choice, nextNode));
-	}
-	
-	@BuilderMethod
-	public void MerchantBilInteractlEdges() { //Jackson
-		var node = get(MyNodeLabels.atCity.toString());
-		var nextNode = get(MyNodeLabels.acceptActions.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.TalkToMerchantBill.toString(),MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void MerchantBillQuestEdges() { //Jackson
-		var node = get(MyNodeLabels.merchantbillTalk.toString());
-		var nextNode1 = get(MyNodeLabels.acceptActions.toString());
-		var choice1 = new DialogChoice("Accept Quest");
-		node.add(new Edge(choice1, nextNode1));
-		var nextNode2 = get(MyNodeLabels.DeclineQuest.toString());
-		var choice2 = new DialogChoice("Decline Quest");
-		node.add(new Edge(choice2, nextNode2));
-		
-	}
-	@BuilderMethod
-	public void DeclineQuestActions() { //Jackson
-		var node = get(MyNodeLabels.DeclineQuest.toString());
-		var nextNode = get(MyNodeLabels.Barrell.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.gotoBarrell.toString(),MyStoryEntities.barrell);
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void AcceptQuestActions() { //Jackson
-		var node = get(MyNodeLabels.acceptActions.toString());
-		var nextNode = get(MyNodeLabels.atForestPath.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug ,MyChoiceLabels.gotoForesstPath.toString(),MyStoryEntities.cityExit);
-		node.add(new Edge(choice, nextNode));
-		
-	}
-	@BuilderMethod
-	public void IgnoreDrunkardEdges() { //Joshua
-		var node = get(MyNodeLabels.IgnoreDrunkard.toString());
-		var nextNode = get(MyNodeLabels.ContinueDrinking.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.ContinueDrinkingChoice.toString(),MyStoryEntities.bartender, Icons.drink, "Drink more");
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void ContinueDrinkingEdges() { //Jackson
-		var node = get(MyNodeLabels.ContinueDrinking.toString());
-		var nextNode1 = get(MyNodeLabels.GoToFireplace.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.GoToFireplaceChoice.toString(), MyStoryEntities.doug, Icons.fireplace, "Look at Fireplace");
-		node.add(new Edge(choice1, nextNode1));
-		var nextNode2 = get(MyNodeLabels.VisitTavernTable.toString());;
-		var choice2 = new PlayerInteraction(MyChoiceLabels.VisitTavernTableChoice.toString(), MyStoryEntities.doug, Icons.torch, "Investigate Tavern Table");
-		node.add(new Edge(choice2, nextNode2));
-		
-	}
-	
-	@BuilderMethod
-	public void FirePlaceEdges() { //Jackson
-		var node = get(MyNodeLabels.GoToFireplace.toString());
-		var nextNode = get(MyNodeLabels.BurnedToDeath.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.BurnedToDeathChoice.toString(), MyStoryEntities.fireplace);
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod
-	public void VisitTavernTableEdges() { //Jackson
-		var node = get(MyNodeLabels.VisitTavernTable.toString());
-		var nextNode1 = get(MyNodeLabels.PickupTorch.toString());
-		//var choice1 = new DialogChoice("Pick up the torch");
-		var choice1 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
-		node.add(new Edge(choice1, nextNode1));
-		var nextNode2 = get(MyNodeLabels.DontPickupTorch.toString());
-		var choice2 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Don't Pickup Torch");
-		node.add(new Edge(choice2, nextNode2));
-	}
-	@BuilderMethod
-	public void PickupTorchEdges() { //Jackson
-		var node = get(MyNodeLabels.PickupTorch.toString());
-		var nextNode = get(MyNodeLabels.BurnedToDeath.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.BurnedToDeathChoice.toString(), MyStoryEntities.taverntable);
-		node.add(new Edge(choice, nextNode));
-		
-	}
-	@BuilderMethod
-	public void DontPickupTorchEdges() { //Jackson
-		var node = get(MyNodeLabels.DontPickupTorch.toString());
-		var nextNode = get(MyNodeLabels.GoToFireplace.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.GoToFireplaceChoice.toString(), MyStoryEntities.doug, Icons.fireplace, "Look at Fireplace");
-		node.add(new Edge(choice, nextNode));
-	}
-	
-	@BuilderMethod //Joshua
-	public void YesToBeggarEdge() {
-		var node = get(MyNodeLabels.FountainYes.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Open Door");
-		var nextNode = get(MyNodeLabels.GoToTavern.toString());
-		node.add(new Edge(choice1, nextNode));
-	}
-	@BuilderMethod //Joshua
-	public void NoToBeggarEdge() {
-		var node = get(MyNodeLabels.FountainNo.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Open Door");
-		var nextNode = get(MyNodeLabels.TavernActions.toString());
-		node.add(new Edge(choice1, nextNode));
-	}
-	@BuilderMethod
-	public void GoToTavernEdge() {
-		var node = get(MyNodeLabels.GoToTavern.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Open Door");
-		var nextNode = get(MyNodeLabels.TavernActions.toString());
-		node.add(new Edge(choice, nextNode));
-	}
-	@BuilderMethod //Joshua
-	public void InTavernEdge() {
-		var node = get(MyNodeLabels.TavernActions.toString());
-		var choice1 = new DialogChoice("Sit");
-		var nextNode1 = get(MyNodeLabels.TavernSit.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new DialogChoice("Talk to Drunkard");
-		var nextNode2 = get(MyNodeLabels.ApproachDrunkard.toString());
-		node.add(new Edge(choice2, nextNode2));
-	}
-	@BuilderMethod // Joshua
-	public void TavernSitEdges() {
-		var node = get(MyNodeLabels.TavernSit.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.IgnoreDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Ignore Drunkard"); //May need Editing
-		var nextNode1 = get(MyNodeLabels.IgnoreDrunkard.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new PlayerInteraction(MyChoiceLabels.TalkToDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Approach Drunkard");
-		var nextNode2 = get(MyNodeLabels.ApproachDrunkard.toString());
-		node.add(new Edge(choice2, nextNode2));
-		
-	}
-	//Having Problems
-	@BuilderMethod // Joshua
-	public void TalkToDrunkard() {
-		var node = get(MyNodeLabels.ApproachDrunkard.toString());
-		var choice1 = new DialogChoice("Rob Drunkard");
-		var nextNode1 = get(MyNodeLabels.RobDrunkard.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new DialogChoice("Continue Talking");
-		var nextNode2 = get(MyNodeLabels.ContinueTalking.toString());
-		node.add(new Edge(choice2, nextNode2));
-		
-	}
-	@BuilderMethod
-	public void RobDrunkardEdge() {
-		var node = get(MyNodeLabels.RobDrunkard.toString());
-		var nextNode = get(MyNodeLabels.ContinueDrinking.toString());
-		var choice = new PlayerInteraction(MyChoiceLabels.ContinueDrinkingChoice.toString(),MyStoryEntities.bartender, Icons.drink, "Drink more");
-		node.add(new Edge(choice, nextNode));
-		
-	}
-	@BuilderMethod
-	public void ContinueTalkingEdge() {
-		
-		var node = get(MyNodeLabels.ContinueTalking.toString());
-		/*var choice1 = new PlayerInteraction(MyChoiceLabels.WakeDrunkard.toString(),MyStoryEntities.drunkard, Icons.talk, "Wake Drunkard");
-		var nextNode1 = get(MyNodeLabels.WakeDrunkard.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new PlayerInteraction(MyChoiceLabels.RobDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Rob Drunkard");
-		var nextNode2 = get(MyNodeLabels.RobDrunkard.toString());
-		node.add(new Edge(choice2, nextNode2));*/
-		var choice1 = new DialogChoice("Wake Drunkard");
-		var nextNode1 = get(MyNodeLabels.WakeDrunkard.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new DialogChoice("Rob Drunkard");
-		var nextNode2 = get(MyNodeLabels.RobDrunkard.toString());
-		node.add(new Edge(choice2, nextNode2));
-		
-		
-	}
-	@BuilderMethod //Joshua
-	public void WakeDrunkardEdge() {
-		/*var node = get(MyNodeLabels.WakeDrunkard.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Continue Drinking");
-		var nextNode1 = get(MyNodeLabels.ContinueDrinking.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new PlayerInteraction(MyChoiceLabels.PersistDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Persists Drunkard");
-		var nextNode2 = get(MyNodeLabels.PersistDrunkard.toString());
-		node.add(new Edge(choice2, nextNode2));*/
-		var node = get(MyNodeLabels.WakeDrunkard.toString());
-		var choice1 = new DialogChoice("Persist Drunkard");
-		var nextNode1 = get(MyNodeLabels.PersistDrunkard.toString());
-		node.add(new Edge(choice1, nextNode1));
-		var choice2 = new DialogChoice("Ignore Drunkard");
-		var nextNode2 = get(MyNodeLabels.ContinueDrinking.toString());
-		node.add(new Edge(choice2, nextNode2));
-	}
-	@BuilderMethod //Joshua
-	public void PersistDrunkardEdge() {
-		var node = get(MyNodeLabels.PersistDrunkard.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.GoToBar.toString(), MyStoryEntities.drunkard, Icons.talk, "Buy Drunkard A drink");
-		var nextNode1 = get(MyNodeLabels.GoToBar.toString());
-		node.add(new Edge(choice1, nextNode1));
-	}
-	@BuilderMethod //Joshua
-	public void GoToBarEdge() {
-		var node = get(MyNodeLabels.GoToBar.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.BuyDrink.toString(), MyStoryEntities.bartender, Icons.coins, "Pay Bartender");
-		var nextNode1 = get(MyNodeLabels.LeaveBar.toString());
-		node.add(new Edge(choice1, nextNode1));
-	}
-	@BuilderMethod //Joshua
-	public void LeaveBarEdge() {
-		var node = get(MyNodeLabels.LeaveBar.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Exit Door");
-		var nextNode1 = get(MyNodeLabels.TakeDrunkardHome.toString());
-		node.add(new Edge(choice1, nextNode1));
-	}
-	@BuilderMethod //Joshua
-	public void TakeDrunkardHomeEdge() {
-		var node = get(MyNodeLabels.TakeDrunkardHome.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.DrunkardDoor.toString(), MyStoryEntities.drunkardhousedoor, Icons.door, "Exit Door");
-		var nextNode1 = get(MyNodeLabels.Conclusion.toString());
-		node.add(new Edge(choice1, nextNode1));
 	}
 	@BuilderMethod
 	public void ForestPathActionsEdges() { //Dylan
@@ -508,6 +256,257 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var choice = new CloseCreditsChoice();
 		node.add(new Edge(choice, nextNode)); 
 	}
+	//DYLAN WORK END
 	
+	@BuilderMethod
+	public void PickUpAppleEdges() {//Jackson
+		var node = get(MyNodeLabels.Barrell.toString());
+		var nextNode = get(MyNodeLabels.Fountain.toString());
+		var choice = new DialogChoice("Fountain");
+		node.add(new Edge(choice, nextNode));
+	}
+
+
+	@BuilderMethod
+	public void TalTalkToBeggarEdge() { //Joshua
+		var node = get(MyNodeLabels.Fountain.toString());
+		var choice1 = new DialogChoice("Give the beggar your apples");
+		var nextNode1 = get(MyNodeLabels.FountainYes.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new DialogChoice("Don't give the beggar your apples");
+		var nextNode2 = get(MyNodeLabels.FountainNo.toString());
+		node.add(new Edge(choice2, nextNode2));	
+		
+	}
+	@BuilderMethod
+	public void WalkToMerchantBillEdges() { //Jackson
+		var node = get(MyNodeLabels.atCity.toString());
+		var nextNode = get(MyNodeLabels.merchantbillTalk.toString());
+		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.WalkToMerchantBill.toString(), MyStoryEntities.merchantbill);
+		node.add(new Edge(choice, nextNode));
+	}
+	
+	@BuilderMethod
+	public void MerchantBilInteractlEdges() { //Jackson
+		var node = get(MyNodeLabels.atCity.toString());
+		var nextNode = get(MyNodeLabels.acceptActions.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.TalkToMerchantBill.toString(),MyStoryEntities.merchantbill, Icons.talk, "Talk to Merchant Bill");
+		node.add(new Edge(choice, nextNode));
+	}
+	@BuilderMethod
+	public void MerchantBillQuestEdges() { //Jackson
+		var node = get(MyNodeLabels.merchantbillTalk.toString());
+		var nextNode1 = get(MyNodeLabels.acceptActions.toString());
+		var choice1 = new DialogChoice("Accept Quest");
+		node.add(new Edge(choice1, nextNode1));
+		var nextNode2 = get(MyNodeLabels.DeclineQuest.toString());
+		var choice2 = new DialogChoice("Decline Quest");
+		node.add(new Edge(choice2, nextNode2));
+		
+	}
+	@BuilderMethod
+	public void DeclineQuestActions() { //Jackson
+		var node = get(MyNodeLabels.DeclineQuest.toString());
+		var nextNode = get(MyNodeLabels.Barrell.toString());
+		var choice = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.gotoBarrell.toString(),MyStoryEntities.barrell);
+		node.add(new Edge(choice, nextNode));
+	}
+	@BuilderMethod
+	public void AcceptQuestActions() { //Jackson
+		var node = get(MyNodeLabels.acceptActions.toString());
+		var nextNode = get(MyNodeLabels.atForestPath.toString());
+		var choice = new PlayerInteraction(MyStoryEntities.doug ,MyChoiceLabels.gotoForesstPath.toString(),MyStoryEntities.cityExit);
+		node.add(new Edge(choice, nextNode));
+		
+	}
+	@BuilderMethod
+	public void IgnoreDrunkardEdges() { //Joshua
+		var node = get(MyNodeLabels.IgnoreDrunkard.toString());
+		var nextNode = get(MyNodeLabels.ContinueDrinking.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.ContinueDrinkingChoice.toString(),MyStoryEntities.bartender, Icons.drink, "Drink more");
+		node.add(new Edge(choice, nextNode));
+	}
+	@BuilderMethod
+	public void ContinueDrinkingEdges() { //Jackson
+		var node = get(MyNodeLabels.ContinueDrinking.toString());
+		var nextNode1 = get(MyNodeLabels.GoToFireplace.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.GoToFireplaceChoice.toString(), MyStoryEntities.doug, Icons.fireplace, "Look at Fireplace");
+		node.add(new Edge(choice1, nextNode1));
+		var nextNode2 = get(MyNodeLabels.VisitTavernTable.toString());;
+		var choice2 = new PlayerInteraction(MyChoiceLabels.VisitTavernTableChoice.toString(), MyStoryEntities.doug, Icons.torch, "Investigate Tavern Table");
+		node.add(new Edge(choice2, nextNode2));
+		
+	}
+	
+	@BuilderMethod
+	public void FirePlaceEdges() { //Jackson
+		var node = get(MyNodeLabels.GoToFireplace.toString());
+		var nextNode = get(MyNodeLabels.BurnedToDeath.toString());
+		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.BurnedToDeathChoice.toString(), MyStoryEntities.fireplace);
+		node.add(new Edge(choice, nextNode));
+	}
+	@BuilderMethod
+	public void VisitTavernTableEdges() { //Jackson
+		var node = get(MyNodeLabels.VisitTavernTable.toString());
+		var nextNode1 = get(MyNodeLabels.PickupTorch.toString());
+		//var choice1 = new DialogChoice("Pick up the torch");
+		var choice1 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
+		node.add(new Edge(choice1, nextNode1));
+		var nextNode2 = get(MyNodeLabels.DontPickupTorch.toString());
+		var choice2 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Don't Pickup Torch");
+		node.add(new Edge(choice2, nextNode2));
+	}
+	@BuilderMethod
+	public void PickupTorchEdges() { //Jackson
+		var node = get(MyNodeLabels.PickupTorch.toString());
+		var nextNode = get(MyNodeLabels.BurnedToDeath.toString());
+		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.BurnedToDeathChoice.toString(), MyStoryEntities.taverntable);
+		node.add(new Edge(choice, nextNode));
+		
+	}
+	@BuilderMethod
+	public void DontPickupTorchEdges() { //Jackson
+		var node = get(MyNodeLabels.DontPickupTorch.toString());
+		var nextNode = get(MyNodeLabels.GoToFireplace.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.GoToFireplaceChoice.toString(), MyStoryEntities.doug, Icons.fireplace, "Look at Fireplace");
+		node.add(new Edge(choice, nextNode));
+	}
+	
+	@BuilderMethod //Joshua
+	public void YesToBeggarEdge() {
+		var node = get(MyNodeLabels.FountainYes.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.redhousedoor, Icons.door, "Open Door");
+		var nextNode = get(MyNodeLabels.GoToTavern.toString());
+		node.add(new Edge(choice1, nextNode));
+	}
+	@BuilderMethod //Joshua
+	public void NoToBeggarEdge() {
+		var node = get(MyNodeLabels.FountainNo.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.redhousedoor, Icons.door, "Open Door");
+		var nextNode = get(MyNodeLabels.TavernActions.toString());
+		node.add(new Edge(choice1, nextNode));
+	}
+	@BuilderMethod
+	public void GoToTavernEdge() {
+		var node = get(MyNodeLabels.GoToTavern.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Open Door");
+		var nextNode = get(MyNodeLabels.TavernActions.toString());
+		node.add(new Edge(choice, nextNode));
+	}
+	@BuilderMethod //Joshua
+	public void InTavernEdge() {
+		var node = get(MyNodeLabels.TavernActions.toString());
+		var choice1 = new DialogChoice("Sit");
+		var nextNode1 = get(MyNodeLabels.TavernSit.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new DialogChoice("Talk to Drunkard");
+		var nextNode2 = get(MyNodeLabels.ApproachDrunkard.toString());
+		node.add(new Edge(choice2, nextNode2));
+	}
+	@BuilderMethod // Joshua
+	public void TavernSitEdges() {
+		var node = get(MyNodeLabels.TavernSit.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.IgnoreDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Ignore Drunkard"); //May need Editing
+		var nextNode1 = get(MyNodeLabels.IgnoreDrunkard.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new PlayerInteraction(MyChoiceLabels.TalkToDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Approach Drunkard");
+		var nextNode2 = get(MyNodeLabels.ApproachDrunkard.toString());
+		node.add(new Edge(choice2, nextNode2));
+		
+	}
+	//Having Problems
+	@BuilderMethod // Joshua
+	public void TalkToDrunkard() {
+		var node = get(MyNodeLabels.ApproachDrunkard.toString());
+		var choice1 = new DialogChoice("Rob Drunkard");
+		var nextNode1 = get(MyNodeLabels.RobDrunkard.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new DialogChoice("Continue Talking");
+		var nextNode2 = get(MyNodeLabels.ContinueTalking.toString());
+		node.add(new Edge(choice2, nextNode2));
+		
+	}
+	@BuilderMethod
+	public void RobDrunkardEdge() {
+		var node = get(MyNodeLabels.RobDrunkard.toString());
+		var nextNode = get(MyNodeLabels.ContinueDrinking.toString());
+		var choice = new PlayerInteraction(MyChoiceLabels.ContinueDrinkingChoice.toString(),MyStoryEntities.bartender, Icons.drink, "Drink more");
+		node.add(new Edge(choice, nextNode));
+		
+	}
+	@BuilderMethod
+	public void ContinueTalkingEdge() {
+		
+		var node = get(MyNodeLabels.ContinueTalking.toString());
+		/*var choice1 = new PlayerInteraction(MyChoiceLabels.WakeDrunkard.toString(),MyStoryEntities.drunkard, Icons.talk, "Wake Drunkard");
+		var nextNode1 = get(MyNodeLabels.WakeDrunkard.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new PlayerInteraction(MyChoiceLabels.RobDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Rob Drunkard");
+		var nextNode2 = get(MyNodeLabels.RobDrunkard.toString());
+		node.add(new Edge(choice2, nextNode2));*/
+		var choice1 = new DialogChoice("Wake Drunkard");
+		var nextNode1 = get(MyNodeLabels.WakeDrunkard.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new DialogChoice("Rob Drunkard");
+		var nextNode2 = get(MyNodeLabels.RobDrunkard.toString());
+		node.add(new Edge(choice2, nextNode2));
+		
+		
+	}
+	@BuilderMethod //Joshua
+	public void WakeDrunkardEdge() {
+		/*var node = get(MyNodeLabels.WakeDrunkard.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Continue Drinking");
+		var nextNode1 = get(MyNodeLabels.ContinueDrinking.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new PlayerInteraction(MyChoiceLabels.PersistDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Persists Drunkard");
+		var nextNode2 = get(MyNodeLabels.PersistDrunkard.toString());
+		node.add(new Edge(choice2, nextNode2));*/
+		var node = get(MyNodeLabels.WakeDrunkard.toString());
+		var choice1 = new DialogChoice("Persist Drunkard");
+		var nextNode1 = get(MyNodeLabels.PersistDrunkard.toString());
+		node.add(new Edge(choice1, nextNode1));
+		var choice2 = new DialogChoice("Ignore Drunkard");
+		var nextNode2 = get(MyNodeLabels.ContinueDrinking.toString());
+		node.add(new Edge(choice2, nextNode2));
+	}
+
+	
+	
+	
+
+	
+	@BuilderMethod //Joshua
+	//New fixed Node Jackson
+	public void PersistDrunkardEdge() {
+		var node = get(MyNodeLabels.PersistDrunkard.toString());
+		var choice1 = new DialogChoice ("Go To Bar");
+		var nextNode1 = get(MyNodeLabels.GoToBar.toString());
+		node.add(new Edge(choice1, nextNode1));
+	}
+	@BuilderMethod //Joshua
+	// Jackson Fixed edge
+	
+	public void GoToBarEdge() {
+		var node = get(MyNodeLabels.GoToBar.toString());
+		var choice1 = new DialogChoice("Leave Bar With Drunkard");
+		var nextNode1 = get(MyNodeLabels.LeaveBar.toString());
+		node.add(new Edge(choice1, nextNode1));
+	}
+	@BuilderMethod //Joshua
+	public void LeaveBarEdge() {
+		var node = get(MyNodeLabels.LeaveBar.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveTavern.toString(), MyStoryEntities.redhousedoorexit, Icons.door, "Exit Door");
+		var nextNode1 = get(MyNodeLabels.TakeDrunkardHome.toString());
+		node.add(new Edge(choice1, nextNode1));
+	}
+	@BuilderMethod //Joshua
+	public void TakeDrunkardHomeEdge() {
+		var node = get(MyNodeLabels.TakeDrunkardHome.toString());
+		var choice1 = new PlayerInteraction(MyChoiceLabels.DrunkardDoor.toString(), MyStoryEntities.drunkardhousedoor, Icons.door, "Exit Door");
+		var nextNode1 = get(MyNodeLabels.Conclusion.toString());
+		node.add(new Edge(choice1, nextNode1));
+	}
 	
 }
+
