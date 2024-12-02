@@ -12,7 +12,7 @@ public enum MyChoiceLabels {
 	TalkToBeggar,
 	WalkToMerchantBill, 
 	TalkToMerchantBill,
-	gotoForestPath,
+	gotoForesstPath,
 	ContinueDrinkingChoice,
 	GoToFireplaceChoice,
 	VisitTavernTableChoice,
@@ -46,6 +46,8 @@ public enum MyChoiceLabels {
 	BuyDrink,
 	LeaveTavern,
 	DrunkardDoor,
+	MerchantKillTalk,
+	PickUpBag, ReturnToCity
 	
 	
 	
