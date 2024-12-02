@@ -209,14 +209,14 @@ public class MyEdgeBuilder extends NodeBuilder {
 	@BuilderMethod //Joshua
 	public void YesToBeggarEdge() {
 		var node = get(MyNodeLabels.FountainYes.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.taverndoor, Icons.door, "Open Door");
+		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.redhousedoor, Icons.door, "Open Door");
 		var nextNode = get(MyNodeLabels.TavernActions.toString());
 		node.add(new Edge(choice1, nextNode));
 	}
 	@BuilderMethod //Joshua
 	public void NoToBeggarEdge() {
 		var node = get(MyNodeLabels.FountainNo.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.taverndoor, Icons.door, "Open Door");
+		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.redhousedoor, Icons.door, "Open Door");
 		var nextNode = get(MyNodeLabels.TavernActions.toString());
 		node.add(new Edge(choice1, nextNode));
 	}
@@ -264,23 +264,26 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod //Joshua
+	//New fixed Node Jackson
 	public void PersistDrunkardEdge() {
 		var node = get(MyNodeLabels.PersistDrunkard.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.GoToBar.toString(), MyStoryEntities.drunkard, Icons.talk, "Buy Drunkard A drink");
+		var choice1 = new DialogChoice ("Go To Bar");
 		var nextNode1 = get(MyNodeLabels.GoToBar.toString());
 		node.add(new Edge(choice1, nextNode1));
 	}
 	@BuilderMethod //Joshua
+	// Jackson Fixed edge
+	
 	public void GoToBarEdge() {
 		var node = get(MyNodeLabels.GoToBar.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.BuyDrink.toString(), MyStoryEntities.bartender, Icons.coins, "Pay Bartender");
+		var choice1 = new DialogChoice("Leave Bar With Drunkard");
 		var nextNode1 = get(MyNodeLabels.LeaveBar.toString());
 		node.add(new Edge(choice1, nextNode1));
 	}
 	@BuilderMethod //Joshua
 	public void LeaveBarEdge() {
 		var node = get(MyNodeLabels.LeaveBar.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveTavern.toString(), MyStoryEntities.taverndoor, Icons.door, "Exit Door");
+		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveTavern.toString(), MyStoryEntities.redhousedoorexit, Icons.door, "Exit Door");
 		var nextNode1 = get(MyNodeLabels.TakeDrunkardHome.toString());
 		node.add(new Edge(choice1, nextNode1));
 	}
@@ -461,6 +464,3 @@ public class MyEdgeBuilder extends NodeBuilder {
 	
 	
 }
-
-
-

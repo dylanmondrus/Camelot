@@ -1,3 +1,4 @@
+
 package myclassproject.mystorygraph;
 
 import static myclassproject.mystorygraph.MyStoryEntities.*;
@@ -121,7 +122,7 @@ public class MyNodeBuilder extends NodeBuilder {
         var node = get(MyNodeLabels.TavernActions.toString());
         node.add(new WalkTo(doug, city, "RedHouseDoor"))
             .add(new FadeOut())
-            .add(new Enter(doug, taverndoor, true))
+            .add(new Enter(doug, redhousedoor, true))
             .add(new WalkTo(doug, drunkard))
             .add(new NarrationSequence("At the tavern there are empty chairs to sit in where you can drink. There is also a drunkard who looks like he has had too many drinks."))
             .add(new HideNarration())
@@ -166,10 +167,11 @@ public class MyNodeBuilder extends NodeBuilder {
     public void VisitTavernTable() {
         // Dylan
         var node = get(MyNodeLabels.VisitTavernTable.toString());
-        node.add(new WalkTo(doug, taverntable))
-            .add(new NarrationSequence("You know you are drunk and probably should not be playing with a torch but you have a strong desire to. Do you pick up the torch?"))
-            .add(new HideNarration())
-            .add(new DialogSequence(doug, null, List.of(""), List.of("Pickup torch", "Do not pickup torch")));
+        node.add(new NarrationSequence("You have chosen to be selfish and not help the drunkard. A torch catches your attention and you decide to walk to the roundtable"))
+        	.add(new Wait (7)) 
+        	.add(new HideNarration())
+        	.add(new EnableInput());
+           
     }
 
     @BuilderMethod
@@ -481,7 +483,7 @@ public void FountainNo() {
     node.add(new NarrationSequence("You get thirsty and decide to go to the brown house door Tavern and have a drink.")
         .add(new HideNarration()))
         .add(new WalkTo(doug, city, "Tavern"))
-        .add(new Enter(doug, taverndoor, true));
+        .add(new Enter(doug, redhousedoor, true));
 }
 @BuilderMethod
 public void ApproachDrunkard() {
@@ -517,43 +519,57 @@ public void WakeDrunkard() {
         .add(new HideNarration());
 }
 @BuilderMethod 
+// New fixed node Jackson
 public void PersistDrunkard() {
     var node = get(MyNodeLabels.PersistDrunkard.toString());
-    node.add(new DialogSequence(doug, drunkard, List.of("I will buy you another drink if you promise to leave after."),List.of("Go to Bar"))
-    	.add(new HideDialog())
-        .add(new DialogSequence(drunkard, doug, List.of("I've never refused a free drink in my life. You got yourself a deal, Doug Do Good."),List.of("Go To Bar"))));
+    node.add(new EnableInput())
+    	.add(new DialogSequence(doug, drunkard, List.of("I will buy you another drink if you promise to leave after."),List.of("Go To Bar")));
 }
 			
 			
 	
 @BuilderMethod
+//Jackson changed node
+
+
 public void GoToBar() {
     var node = get(MyNodeLabels.GoToBar.toString());
     node.add(new HideDialog())
-    .add(new WalkTo(doug, tavernbar))
+    .add(new NarrationSequence(" the drunkard says, I've never refused a free drink in my life. You got yourself a deal, Doug Do Good."))
+    .add(new Wait(5))
+    .add(new HideNarration())
+    .add(new WalkTo(doug, bartender))
         .add(new WalkTo(drunkard, tavernbar))
+        .add(new NarrationSequence("The bartender charges you a coin for the drink"))
+        .add(new Wait(2))
+        .add(new HideNarration())
         .add(new Give(doug, coin, bartender))
         .add(new Give(bartender, bottle, drunkard))
         .add(new Drink(drunkard))
-        .add(new DialogSequence(drunkard, doug, List.of("Thank you. I have had a hard time recently and really needed someone to help me and be kind. You are a good man. Can you help me get home?"),List.of("Take Drunkard Home")));
+        .add(new DialogSequence(drunkard, doug, List.of("Thank you. I have had a hard time recently and really needed someone to help me and be kind. You are a good man. Can you help me get home?"),List.of("Leave Bar With Drunkard")));
 }
 @BuilderMethod
 public void TakeDrunkardHome() {
     var node = get(MyNodeLabels.TakeDrunkardHome.toString());
-    node.add(new WalkTo(doug, drunkardhousedoor))
+    node.add(new HideDialog())
+    	.add(new WalkTo(doug, drunkardhousedoor))
         .add(new WalkTo(drunkard, drunkardhousedoor))
         .add(new Exit(drunkard, drunkardhousedoor, true));
 }
 @BuilderMethod
+//Jackson Changed
+
+
 public void LeaveBar() {
 	var node = get(MyNodeLabels.LeaveBar.toString());
 	node.add(new HideDialog())
-	.add(new WalkTo(doug, taverndoor))
-    .add(new WalkTo(drunkard, taverndoor))
-    .add(new Exit(doug, taverndoor, true))
-    .add(new Exit(drunkard, taverndoor, true))
-    .add(new Enter(doug,taverndoor, true))
-	.add(new Enter(drunkard,taverndoor, true));
+    .add(new WalkTo(drunkard, redhousedoorexit))
+    .add(new Wait(1))
+    .add(new Exit(drunkard, redhousedoorexit, true))
+    .add (new Wait(1))
+    .add(new WalkTo(doug, redhousedoorexit))
+    .add(new Wait(1))
+    .add(new Exit(doug, redhousedoorexit, true));
 }
 	
 @BuilderMethod
@@ -570,7 +586,3 @@ public void Conclusion() {
 
 
 }
-
-
-
-

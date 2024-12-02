@@ -36,7 +36,6 @@ public final class MyStoryEntities {
 	public static final Item coin = new Item("Coin", ItemTypes.Coin);
 	public static final Item littorch = new Item("Lit Torch", ItemTypes.LitTorch);
 	public static final Item hammer = new Item("Hammer", ItemTypes.Hammer);
-	public static final Furniture taverndoor = new Furniture(city, FurnitureTypes.RedHouseDoor);
 	public static final Furniture cityExit = new Furniture(city, FurnitureTypes.NorthEnd);
 	public static final Furniture forestexit = new Furniture(forestpath, FurnitureTypes.EastEnd);
 	public static final Place dungeon = new Place("Dungeon", PlaceTypes.Dungeon);
@@ -47,6 +46,7 @@ public final class MyStoryEntities {
 	public static final Furniture fireplace = new Furniture(tavern, FurnitureTypes.Fireplace);
 	public static final Furniture roundtable = new Furniture(tavern, FurnitureTypes.RoundTable);
 	public static final Furniture redhousedoor = new Furniture(city, FurnitureTypes.RedHouseDoor);
+	public static final Furniture redhousedoorexit = new Furniture(tavern, FurnitureTypes.Door);
 	//public static final Furniture cottageDoor = new Furniture(cottage, FurnitureTypes.Door);
 	//public static final Furniture table = new Furniture(cottage, FurnitureTypes.Table);
 	public static final Furniture dungeonDoor = new Furniture(city, FurnitureTypes.BlueHouseDoor);
