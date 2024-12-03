@@ -527,7 +527,7 @@ public void PersistDrunkard() {
 @BuilderMethod
 //Jackson changed node
 
-
+//IMPORTANT CHANGES MADE
 public void GoToBar() {
  var node = get(MyNodeLabels.GoToBar.toString());
  node.add(new HideDialog())
@@ -546,6 +546,8 @@ public void GoToBar() {
 }
 @BuilderMethod
 //Jackson Updated this node
+
+// IMPORTANT CHANGES MADE
 public void TakeDrunkardHome() {
  var node = get(MyNodeLabels.TakeDrunkardHome.toString());
  node.add(new HideDialog())
@@ -562,10 +564,12 @@ public void TakeDrunkardHome() {
      .add(new Wait(1))
      .add(new WalkTo(doug, drunkard))
      .add(new Wait(1))
-     .add(new NarrationSequence("The drunkard claims he won the race, but thanks you for getting him home safely"))
+     .add(new NarrationSequence("The drunkard taunts you for beating you in the race, but thanks you for getting him home safely"))
      .add(new Wait(6))
      .add(new HideNarration())
      .add(new Face (drunkard,doug))
+     .add(new Dance(drunkard))
+     .add(new Wait(3))
      .add(new Wave(drunkard))
      .add(new Exit(drunkard, drunkardhousedoor, true))
      .add(new FadeIn())
@@ -574,7 +578,7 @@ public void TakeDrunkardHome() {
 @BuilderMethod
 //Jackson Changed
 
-
+//IMPORTANT CHANGES MADE
 public void LeaveBar() {
 	var node = get(MyNodeLabels.LeaveBar.toString());
 	node.add(new HideDialog())
@@ -590,6 +594,7 @@ public void LeaveBar() {
 }
 	
 @BuilderMethod
+//IMPORTANT CHANGES MADE
 public void Conclusion() {
     var node = get(MyNodeLabels.Conclusion.toString());
     node.add(new SetDay()).add(new HideDialog()).add(new SetPosition(drunkard,drunkardhousedoor)).add(new NarrationSequence("The drunkard sobered up the next day. He gratefully approached you and revealed that he was the king's brother. "
