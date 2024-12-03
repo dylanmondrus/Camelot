@@ -1,7 +1,9 @@
+
 package myclassproject.mystorygraph;
 
 import com.entities.Characters;
 import com.entities.Furniture;
+import com.entities.IInteract;
 import com.entities.Item;
 import com.entities.Place;
 import com.enums.BodyTypes;
@@ -52,7 +54,7 @@ public final class MyStoryEntities {
 	public static final Furniture well = new Furniture(forestpath, FurnitureTypes.Well);
 	public static final Furniture tavernbar = new Furniture(tavern, FurnitureTypes.Bar);
 	public static final Place drunkardhouse = new Place("Drunkard's House",PlaceTypes.Cottage);
-	public static final Furniture drunkardhousedoor = new Furniture(drunkardhouse, FurnitureTypes.BrownHouseDoor);
+	public static final Furniture drunkardhousedoor = new Furniture(city, FurnitureTypes.GreenHouseDoor);
 	public static final Furniture forestplant = new Furniture(forestpath, FurnitureTypes.Plant);
 	public static final Furniture tavernenter = new Furniture(tavern, FurnitureTypes.Door);
 	public static final Furniture tavernexit = new Furniture(tavern, FurnitureTypes.Backdoor);
@@ -60,6 +62,7 @@ public final class MyStoryEntities {
 	public static final Furniture cell = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
 	public static final Furniture insideDungeonDoor = new Furniture(dungeon, FurnitureTypes.Door); //Dylan
 	public static final Furniture dungeonshit = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
+	public static final Furniture redhousedoorexit = new Furniture(tavern, FurnitureTypes.Door);
 	
 	
 	

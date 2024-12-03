@@ -1,3 +1,4 @@
+
 package myclassproject.mystorygraph;
 
 import java.util.List;
@@ -100,7 +101,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	public void GoToFountainEdges() { //Jackson
 		var node = get(MyNodeLabels.Barrell.toString());
 		var nextNode = get(MyNodeLabels.Fountain.toString());
-		var choice = new PlayerInteraction(MyStoryEntities.doug, MyChoiceLabels.WalkToFountain.toString(),MyStoryEntities.fountain);
+		var choice = new DialogChoice(("Fountain"));
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod
@@ -163,14 +164,14 @@ public class MyEdgeBuilder extends NodeBuilder {
 		
 	}
 	@BuilderMethod
-	public void IgnoreDrunkardEdges() { //Joshua //Joshua Fixed
+	public void IgnoreDrunkardEdges() { //Joshua
 		var node = get(MyNodeLabels.IgnoreDrunkard.toString());
 		var nextNode = get(MyNodeLabels.ContinueDrinking.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.ContinueDrinkingChoice.toString(),MyStoryEntities.bartender, Icons.drink, "Drink more");
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod
-	public void ContinueDrinkingEdges() { //Jackson //Joshua Fixed
+	public void ContinueDrinkingEdges() { //Jackson
 		var node = get(MyNodeLabels.ContinueDrinking.toString());
 		var nextNode1 = get(MyNodeLabels.GoToFireplace.toString());
 		var choice1 = new PlayerInteraction(MyChoiceLabels.GoToFireplaceChoice.toString(), MyStoryEntities.doug, Icons.fireplace, "Look at Fireplace");
@@ -189,22 +190,21 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod
-	public void VisitTavernTableEdges() { //Jackson 
+	public void VisitTavernTableEdges() { //Jackson
 		var node = get(MyNodeLabels.VisitTavernTable.toString());
 		var nextNode1 = get(MyNodeLabels.PickupTorch.toString());
 		//var choice1 = new DialogChoice("Pick up the torch");
 		var choice1 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Pickup Torch");
 		node.add(new Edge(choice1, nextNode1));
 		var nextNode2 = get(MyNodeLabels.DontPickupTorch.toString());
-		var choice2 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Do not Pickup Torch");
+		var choice2 = new PlayerInteraction(MyChoiceLabels.PickupTorchChoice.toString(),MyStoryEntities.doug, Icons.torch, "Don't Pickup Torch");
 		node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod
 	public void PickupTorchEdges() { //Jackson
 		var node = get(MyNodeLabels.PickupTorch.toString());
 		var nextNode = get(MyNodeLabels.BurnedToDeath.toString());
-		//var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.BurnedToDeathChoice.toString(), MyStoryEntities.taverntable);
-		var choice = new DialogChoice("Burned to death");
+		var choice = new PlayerInteraction(MyStoryEntities.doug,MyChoiceLabels.BurnedToDeathChoice.toString(), MyStoryEntities.taverntable);
 		node.add(new Edge(choice, nextNode));
 		
 	}
@@ -224,21 +224,21 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice1, nextNode));
 	}
 	@BuilderMethod //Joshua
-	public void NoToBeggarEdge() { //Joshua Fixed
+	public void NoToBeggarEdge() {
 		var node = get(MyNodeLabels.FountainNo.toString());
 		var choice1 = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Open Door");
 		var nextNode = get(MyNodeLabels.TavernActions.toString());
 		node.add(new Edge(choice1, nextNode));
 	}
 	@BuilderMethod
-	public void GoToTavernEdge() { //Joshua Fixed
+	public void GoToTavernEdge() {
 		var node = get(MyNodeLabels.GoToTavern.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.WalkToTavern.toString(), MyStoryEntities.tavernenter, Icons.door, "Open Door");
 		var nextNode = get(MyNodeLabels.TavernActions.toString());
 		node.add(new Edge(choice, nextNode));
 	}
 	@BuilderMethod //Joshua
-	public void InTavernEdge() { //Joshua Fixed
+	public void InTavernEdge() {
 		var node = get(MyNodeLabels.TavernActions.toString());
 		var choice1 = new DialogChoice("Sit");
 		var nextNode1 = get(MyNodeLabels.TavernSit.toString());
@@ -248,7 +248,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod // Joshua
-	public void TavernSitEdges() { //Joshua Fixed
+	public void TavernSitEdges() {
 		var node = get(MyNodeLabels.TavernSit.toString());
 		var choice1 = new PlayerInteraction(MyChoiceLabels.IgnoreDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Ignore Drunkard"); //May need Editing
 		var nextNode1 = get(MyNodeLabels.IgnoreDrunkard.toString());
@@ -260,7 +260,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 	}
 	//Having Problems
 	@BuilderMethod // Joshua
-	public void TalkToDrunkard() { //Joshua Fixed
+	public void TalkToDrunkard() {
 		var node = get(MyNodeLabels.ApproachDrunkard.toString());
 		var choice1 = new DialogChoice("Rob Drunkard");
 		var nextNode1 = get(MyNodeLabels.RobDrunkard.toString());
@@ -271,7 +271,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		
 	}
 	@BuilderMethod
-	public void RobDrunkardEdge() { //Joshua Fixed
+	public void RobDrunkardEdge() {
 		var node = get(MyNodeLabels.RobDrunkard.toString());
 		var nextNode = get(MyNodeLabels.ContinueDrinking.toString());
 		var choice = new PlayerInteraction(MyChoiceLabels.ContinueDrinkingChoice.toString(),MyStoryEntities.bartender, Icons.drink, "Drink more");
@@ -279,7 +279,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		
 	}
 	@BuilderMethod
-	public void ContinueTalkingEdge() { //Joshua Fixed
+	public void ContinueTalkingEdge() {
 		
 		var node = get(MyNodeLabels.ContinueTalking.toString());
 		/*var choice1 = new PlayerInteraction(MyChoiceLabels.WakeDrunkard.toString(),MyStoryEntities.drunkard, Icons.talk, "Wake Drunkard");
@@ -298,7 +298,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		
 	}
 	@BuilderMethod //Joshua
-	public void WakeDrunkardEdge() { //Joshua Fixed
+	public void WakeDrunkardEdge() {
 		/*var node = get(MyNodeLabels.WakeDrunkard.toString());
 		var choice1 = new PlayerInteraction(MyChoiceLabels.LeaveDrunkard.toString(), MyStoryEntities.drunkard, Icons.talk, "Continue Drinking");
 		var nextNode1 = get(MyNodeLabels.ContinueDrinking.toString());
@@ -315,6 +315,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice2, nextNode2));
 	}
 	@BuilderMethod //Joshua
+	//New fixed Node Jackson
 	public void PersistDrunkardEdge() {
 		var node = get(MyNodeLabels.PersistDrunkard.toString());
 		var choice1 = new DialogChoice ("Go To Bar");
@@ -337,10 +338,10 @@ public class MyEdgeBuilder extends NodeBuilder {
 		var nextNode1 = get(MyNodeLabels.TakeDrunkardHome.toString());
 		node.add(new Edge(choice1, nextNode1));
 	}
-	@BuilderMethod //Joshua
+	@BuilderMethod
 	public void TakeDrunkardHomeEdge() {
 		var node = get(MyNodeLabels.TakeDrunkardHome.toString());
-		var choice1 = new PlayerInteraction(MyChoiceLabels.DrunkardDoor.toString(), MyStoryEntities.drunkardhousedoor, Icons.door, "Exit Door");
+		var choice1 = new DialogChoice("Conclusion");
 		var nextNode1 = get(MyNodeLabels.Conclusion.toString());
 		node.add(new Edge(choice1, nextNode1));
 	}
