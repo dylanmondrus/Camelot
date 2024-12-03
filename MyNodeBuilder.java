@@ -1,11 +1,13 @@
-
 package myclassproject.mystorygraph;
 
 import static myclassproject.mystorygraph.MyStoryEntities.*;
+
 import java.util.List;
 import com.actions.*;
 import com.sequences.*;
 import com.storygraph.*;
+import com.enums.*;
+import com.enums.Effects;
 import myclassproject.mystorygraph.MyNodeLabels;
 
 public class MyNodeBuilder extends NodeBuilder {
@@ -87,7 +89,7 @@ public class MyNodeBuilder extends NodeBuilder {
         // Dylan
         var node = get(MyNodeLabels.Fountain.toString());
         node.add (new HideDialog()).add(new WalkTo(doug, fountain))
-            .add(new DialogSequence(doug, beggar, List.of("I'm so hungry, can I have your apples?"), List.of("Yes, here is an apple", "Get job you filthy beggar")))
+            .add(new DialogSequence(doug, beggar, List.of("I'm so hungry, can I have your apples?"), List.of("Yes", "No")))
             .add(new HideDialog());
     }
 
@@ -101,20 +103,20 @@ public class MyNodeBuilder extends NodeBuilder {
             .add(new Wait(3)).add(new HideNarration());
     }
     @BuilderMethod
-    public void GoToTavern() {
+    public void GoToTavern() { //Joshua Fixed
     	var node = get(MyNodeLabels.GoToTavern.toString());
     	node.add(new WalkTo(doug, city, "RedHouseDoor"))
         .add(new Enter(doug, tavernenter, true));
     }
 
     @BuilderMethod
-    public void TavernActions() {
+    public void TavernActions() { //Joshua Fixed
         // Dylan
         var node = get(MyNodeLabels.TavernActions.toString());
        // node.add(new WalkTo(doug, city, "RedHouseDoor"))
            // .add(new FadeOut())
             //.add(new Enter(doug, taverndoor, true))
-            node.add(new FadeIn()).add(new WalkTo(doug, drunkard))
+            node.add(new FadeIn())//.add(new WalkTo(doug, drunkard))
             .add(new NarrationSequence("At the tavern there are empty chairs to sit in where you can drink. There is also a drunkard who looks like he has had too many drinks.")).add(new Wait(5))
             .add(new HideNarration())
             .add(new DialogSequence(doug, doug, List.of("..."), List.of("Sit", "Talk to Drunkard")));
@@ -124,43 +126,43 @@ public class MyNodeBuilder extends NodeBuilder {
     public void TavernSit() {
         // Dylan
         var node = get(MyNodeLabels.TavernSit.toString());
-        node.add(new DisableInput()).add(new HideDialog()).add(new Sit(doug, tavernstool))
-            .add(new Take(doug, bottle,bartender))
+        node.add(new DisableInput()).add(new HideDialog()).add(new Sit(doug, tavernstool)).add(new NarrationSequence("You think to yourself, Why am I sitting instead drinking right now. Lets Party"))
+        	.add(new Wait(4)).add(new HideNarration()).add(new Take(doug, bottle,bartender))
             .add(new Drink(doug)).add(new Face(doug, drunkard)).add(new Wait(1))
             .add(new Dance(drunkard))
-            .add(new NarrationSequence("You enjoy a beverage, but you can't help but notice the drunkard really needs help. Do you ignore him or do you help him?")).add(new Wait(2))
+            .add(new NarrationSequence("You enjoy a beverage, but this guy at the bar is wasted and looks like he needs help. Do you ignore him and party or do you help him?")).add(new Wait(2))
             .add(new HideNarration())
             .add(new EnableInput());
     }
 
     @BuilderMethod
-    public void IgnoreDrunkard() {
+    public void IgnoreDrunkard() { //Joshua Fixed
         // Dylan
         var node = get(MyNodeLabels.IgnoreDrunkard.toString());
-        node.add(new DisableInput()).add(new NarrationSequence("Your thirst is still strong so you continue drinking")).add(new Wait(1))
+        node.add(new DisableInput()).add(new NarrationSequence("Your thirst is strong so you continue drinking")).add(new Wait(4))
             .add(new HideNarration()).add(new Drink(doug))
             .add(new EnableInput());
     }
 
     @BuilderMethod
-    public void ContinueDrinking() {
+    public void ContinueDrinking() { //Joshua Fixed
         // Dylan
         var node = get(MyNodeLabels.ContinueDrinking.toString());
         node.add(new HideDialog()).add(new DisableInput()).add(new Pocket(doug, bottle)).add(new Take(doug, bottle, bartender)).add(new Drink(doug)).add(new Laugh(doug))
             .add(new Face(doug, fireplace))
-            .add(new NarrationSequence("You start to get drunk and the fire catches your attention. Do you go to the fireplace and watch or do you go to the torch that is on the table?"))
+            .add(new NarrationSequence("You start feeling tipsy and like a moth to a flame the fire catches your attention. Do you go to the fireplace and watch or do you go to the torch that is on the table?"))
             .add(new Wait(2)).add(new HideNarration()).add(new EnableInput())
             /*.add(new DialogSequence(doug, doug, List.of("..."), List.of("Table", "Fireplace")))*/;
     }
 
     @BuilderMethod
-    public void VisitTavernTable() {
+    public void VisitTavernTable() { //Joshua Fixed
         // Dylan
         var node = get(MyNodeLabels.VisitTavernTable.toString());
         node.add(new HideDialog())
         	//.add(new WalkTo(doug, taverntable))
         	.add(new DisableInput())
-            .add(new NarrationSequence("You know you are drunk and probably should not be playing with a torch but you have a strong desire to. Do you pick up the torch?"))
+            .add(new NarrationSequence("Something feels sketchy about playing with fire. Last fall your Uncle John Do Bad set his house on fire, but he was kinda a loser. Do you pick up the torch?"))
             .add(new Wait(3))
             .add(new HideNarration())
             .add(new EnableInput())
@@ -171,28 +173,31 @@ public class MyNodeBuilder extends NodeBuilder {
     public void PickupTorch() {
         // Dylan
         var node = get(MyNodeLabels.PickupTorch.toString());
-        node.add(new EnableInput()).add(new Pickup(doug, littorch))
-            .add(new NarrationSequence("Your motor skills have been severely compromised and you drop the torch and the tavern begins to set fire. You can hardly move and you burn to death with the drunkard you ignored."))
-            .add(new HideNarration())
-            .add(new Die(doug));
+        node.add(new DisableInput()).add(new Pickup(doug, littorch))
+            .add(new NarrationSequence("In an innibriated state you hastily pick up the torch. Ouch you get a splinter and drop the torch. The tavern burns to the ground with you and that weird drunk guy inside."))
+            .add(new Wait(3)).add(new HideNarration())//.add(new Putdown(doug,littorch))
+            .add(new CreateEffect(doug, com.enums.Effects.Spiralflame))
+            .add(new EnableEffect(doug, com.enums.Effects.Spiralflame))
+            .add(new Die(doug)).add(new EnableInput())
         // put burning visual effect
-        node.add(new DialogSequence(doug, null, List.of(""), List.of("Burned to death")));
+        .add(new DialogSequence(doug, doug, List.of("..."), List.of("Burned to death")));
     }
 
     @BuilderMethod
     public void BurnedToDeath() {
         // Dylan
         var node = get(MyNodeLabels.BurnedToDeath.toString());
-        node.add(new NarrationSequence("You let drinking and risky behavior take priority over being a good man. You and an innocent drunkard died because of your foolish actions."))
+        node.add(new HideDialog()).add(new DisableInput()).add(new NarrationSequence("You let drinking and risky behavior take priority over being a good man. You and an innocent drunkard died because of your foolish actions.")).add(new Wait(2))
             .add(new HideNarration())
-            .add(new FadeOut());
+            .add(new FadeOut()).add(new CreditsSequence("Thank you for playing our game!"
+                	+ "Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch"));
     }
 
     @BuilderMethod
     public void DontPickupTorch() {
         // Dylan
         var node = get(MyNodeLabels.DontPickupTorch.toString());
-        node.add(new NarrationSequence("You are still caught up on the fireplace and you want to look at it. You walk over to the fireplace"))
+        node.add(new NarrationSequence("OOHH Doug likes the fireplace. You walk over to the fireplace")).add(new Wait(2))
             .add(new HideNarration())
             .add(new WalkTo(doug, fireplace));
     }
@@ -203,11 +208,12 @@ public class MyNodeBuilder extends NodeBuilder {
         var node = get(MyNodeLabels.GoToFireplace.toString());
         node.add(new WalkTo(doug, fireplace))
             .add(new LookAt(doug, fireplace))
+            .add(new NarrationSequence("While walking over to the fireplace you trip and fall into the fire because you had to much to drink. You burn to death."))
+            .add(new Wait(3)).add(new HideNarration()).add(new Kneel(doug)).add(new CreateEffect(doug, com.enums.Effects.Spiralflame))
+            .add(new EnableEffect(doug, com.enums.Effects.Spiralflame))//add visual effect
             .add(new Die(doug))
-            .add(new NarrationSequence("While walking over to the fireplace you trip and fall into the fire because you are too drunk. You burn to death."))
-            .add(new Wait(10))
-            .add(new HideNarration())
-            .add(new FadeOut());
+            .add(new FadeOut()).add(new CreditsSequence("Thank you for playing our game!"
+                	+ "Contributors: Dylan Mondrus-Jackson Burch-Joshua Burch"));
     }
 
 
@@ -473,19 +479,19 @@ public class MyNodeBuilder extends NodeBuilder {
     }
 
 @BuilderMethod
-public void FountainNo() {
+public void FountainNo() { //Joshua Fixed
     var node = get(MyNodeLabels.FountainNo.toString());
     node.add(new NarrationSequence("You get thirsty and decide to go to the brown house door Tavern and have a drink.")
         .add(new HideNarration()))
         .add(new Exit(doug, redhousedoor, true)).add(new Enter(doug, tavernenter, true)).add(new EnableInput());
 }
 @BuilderMethod
-public void ApproachDrunkard() {
+public void ApproachDrunkard() { //Joshua Fixed
     var node = get(MyNodeLabels.ApproachDrunkard.toString());
-    node.add(new DisableInput()).add(new EnableInput()).add(new DialogSequence(doug, drunkard, List.of("Do you need any help? It looks like you are about to pass out."),List.of("Rob Drunkard", "Continue Talking")));
+    node.add(new HideDialog()).add(new DisableInput()).add(new WalkTo(doug,drunkard)).add(new EnableInput()).add(new DialogSequence(doug, drunkard, List.of("Do you need any help? It looks like you are about to pass out."),List.of("Rob Drunkard", "Continue Talking")));
 }
 @BuilderMethod
-public void ContinueTalking() {
+public void ContinueTalking() { //Joshua Fixed
 	var node = get(MyNodeLabels.ContinueTalking.toString());
 	node.add(new DisableInput()).add(new HideDialog()).add(new NarrationSequence("The drunkard is wobbling and slurring his words. The Drunkard is about to passes out.")).add(new Wait(2))
         .add(new HideNarration()).add(new EnableInput())
@@ -496,16 +502,17 @@ public void ContinueTalking() {
 }
 
 @BuilderMethod
-public void RobDrunkard() {
+public void RobDrunkard() { //Joshua Fixed
     var node = get(MyNodeLabels.RobDrunkard.toString());
-    node.add(new DisableInput()).add(new HideDialog()).add(new Take(doug, coin, drunkard)).add(new Die(drunkard))
-        .add(new NarrationSequence("With the drunkard's money in hand, you decide to buy another drink.")).add(new Wait(2)).add(new HideNarration())
+    node.add(new DisableInput()).add(new HideDialog()).add(new Take(doug, bottle, drunkard)).add(new Die(drunkard)).add(new Drink(doug))
+        .add(new NarrationSequence("After taking the drunkards drink he passes, and you to drink his. You decide to buy another drink.")).add(new Wait(2)).add(new HideNarration()).add(new Face(doug,bartender))
+        .add(new WalkTo(doug,bartender))
         .add(new EnableInput());
 }
 @BuilderMethod//Confuesed
-public void WakeDrunkard() {
+public void WakeDrunkard() { //Joshua Fixed
     var node = get(MyNodeLabels.WakeDrunkard.toString());
-    node.add(new DisableInput()).add(new HideDialog()).add(new Die(drunkard)).add(new Wait(1)).add(new NarrationSequence("The drunkard has passed out. Do you rob the drunkard or wake him?"))
+    node.add(new DisableInput()).add(new HideDialog()).add(new Face(doug,drunkard)).add(new Die(drunkard)).add(new Wait(1)).add(new NarrationSequence("The drunkard has passed out. Try and Wake him up"))
         .add(new Wait(3)).add((new HideNarration())).add(new Clap(doug)).add(new Wait(1))
         .add(new Revive(drunkard)) //using revive as a way for drunkard to wake up
         .add(new NarrationSequence("Your claps have awoken the drunkard, but he is angry that you woke him.")).add(new Wait(2))
@@ -517,91 +524,87 @@ public void WakeDrunkard() {
 @BuilderMethod 
 //New fixed node Jackson
 public void PersistDrunkard() {
- var node = get(MyNodeLabels.PersistDrunkard.toString());
- node.add(new EnableInput())
- 	.add(new DialogSequence(doug, drunkard, List.of("I will buy you another drink if you promise to leave after."),List.of("Go To Bar")));
+var node = get(MyNodeLabels.PersistDrunkard.toString());
+node.add(new EnableInput())
+.add(new DialogSequence(doug, drunkard, List.of("I will buy you another drink if you promise to leave after."),List.of("Go To Bar")));
 }
-			
-			
-	
 @BuilderMethod
 //Jackson changed node
 
 //IMPORTANT CHANGES MADE
 public void GoToBar() {
- var node = get(MyNodeLabels.GoToBar.toString());
- node.add(new HideDialog())
- .add(new NarrationSequence(" the drunkard says, I've never refused a free drink in my life. You got yourself a deal, Doug Do Good."))
- .add(new Wait(5))
- .add(new HideNarration())
- .add(new WalkTo(doug, bartender))
-     //.add(new WalkTo(drunkard, tavernbar))
-     .add(new NarrationSequence("The bartender charges you a coin for the drink"))
-     .add(new Wait(2))
-     .add(new HideNarration())
-     .add(new Give(doug, coin, bartender))
-     .add(new Give(bartender, bottle, drunkard))
-     .add(new Drink(drunkard))
-     .add(new DialogSequence(drunkard, doug, List.of("Thank you. I have had a hard time recently and really needed someone to help me and be kind. You are a good man. Can you help me get home?"),List.of("Leave Bar With Drunkard")));
+var node = get(MyNodeLabels.GoToBar.toString());
+node.add(new HideDialog())
+.add(new NarrationSequence(" the drunkard says, I've never refused a free drink in my life. You got yourself a deal, Doug Do Good."))
+.add(new Wait(5))
+.add(new HideNarration())
+.add(new WalkTo(doug, bartender))
+  //.add(new WalkTo(drunkard, tavernbar))
+  .add(new NarrationSequence("The bartender charges you a coin for the drink"))
+  .add(new Wait(2))
+  .add(new HideNarration())
+  .add(new Give(doug, coin, bartender))
+  .add(new Give(bartender, bottle, drunkard))
+  .add(new Drink(drunkard))
+  .add(new DialogSequence(drunkard, doug, List.of("Thank you. I have had a hard time recently and really needed someone to help me and be kind. You are a good man. Can you help me get home?"),List.of("Leave Bar With Drunkard")));
 }
 @BuilderMethod
 //Jackson Updated this node
 
-// IMPORTANT CHANGES MADE
+//IMPORTANT CHANGES MADE
 public void TakeDrunkardHome() {
- var node = get(MyNodeLabels.TakeDrunkardHome.toString());
- node.add(new HideDialog())
- .add(new Exit(doug, redhousedoorexit, true))
- .add(new Enter(doug, redhousedoor, true))
- 	.add(new FadeIn())
- 	.add(new SetNight())
- 	.add(new Wait(2))
- 	.add(new NarrationSequence("The drunkard screams last one to my house is a rotten egg."))
- 	.add(new Wait(2))
- 	.add(new DisableInput())
- 	.add(new HideNarration())
-     .add(new WalkTo(drunkard, drunkardhousedoor))
-     .add(new Wait(1))
-     .add(new WalkTo(doug, drunkard))
-     .add(new Wait(1))
-     .add(new NarrationSequence("The drunkard taunts you for beating you in the race, but thanks you for getting him home safely"))
-     .add(new Wait(6))
-     .add(new HideNarration())
-     .add(new Face (drunkard,doug))
-     .add(new Dance(drunkard))
-     .add(new Wait(3))
-     .add(new Wave(drunkard))
-     .add(new Exit(drunkard, drunkardhousedoor, true))
-     .add(new FadeIn())
-     .add(new DialogSequence(doug,doug,List.of("You did a good hob getting him home safely"),List.of("Conclusion")));
+var node = get(MyNodeLabels.TakeDrunkardHome.toString());
+node.add(new HideDialog())
+.add(new Exit(doug, redhousedoorexit, true))
+.add(new Enter(doug, redhousedoor, true))
+.add(new FadeIn())
+.add(new SetNight())
+.add(new Wait(2))
+.add(new NarrationSequence("The drunkard screams last one to my house is a rotten egg."))
+.add(new Wait(2))
+.add(new DisableInput())
+.add(new HideNarration())
+  .add(new WalkTo(drunkard, drunkardhousedoor))
+  .add(new Wait(1))
+  .add(new WalkTo(doug, drunkard))
+  .add(new Wait(1))
+  .add(new NarrationSequence("The drunkard taunts you for beating you in the race, but thanks you for getting him home safely"))
+  .add(new Wait(6))
+  .add(new HideNarration())
+  .add(new Face (drunkard,doug))
+  .add(new Dance(drunkard))
+  .add(new Wait(3))
+  .add(new Wave(drunkard))
+  .add(new Exit(drunkard, drunkardhousedoor, true))
+  .add(new FadeIn())
+  .add(new DialogSequence(doug,doug,List.of("You did a good hob getting him home safely"),List.of("Conclusion")));
 }
 @BuilderMethod
 //Jackson Changed
 
 //IMPORTANT CHANGES MADE
 public void LeaveBar() {
-	var node = get(MyNodeLabels.LeaveBar.toString());
-	node.add(new HideDialog())
- .add(new WalkTo(drunkard, redhousedoorexit))
- .add(new Wait(1))
- .add(new Exit(drunkard, redhousedoorexit, true))
- .add(new Enter(drunkard, redhousedoor, true))
- .add(new FadeIn())
- .add(new NarrationSequence("Follow the drunkard and take him home"))
- .add(new Wait(3))
- .add(new HideNarration())
- .add(new EnableInput());
+var node = get(MyNodeLabels.LeaveBar.toString());
+node.add(new HideDialog())
+.add(new WalkTo(drunkard, redhousedoorexit))
+.add(new Wait(1))
+.add(new Exit(drunkard, redhousedoorexit, true))
+.add(new Enter(drunkard, redhousedoor, true))
+.add(new FadeIn())
+.add(new NarrationSequence("Follow the drunkard and take him home"))
+.add(new Wait(3))
+.add(new HideNarration())
+.add(new EnableInput());
 }
-	
 @BuilderMethod
 //IMPORTANT CHANGES MADE
 public void Conclusion() {
-    var node = get(MyNodeLabels.Conclusion.toString());
-    node.add(new SetDay()).add(new HideDialog()).add(new SetPosition(drunkard,drunkardhousedoor)).add(new NarrationSequence("The drunkard sobered up the next day. He gratefully approached you and revealed that he was the king's brother. "
-            + "He had recently found out that the king was searching for an heir to the throne but deemed him unfit to rule. "
-            + "The drunkard took the news harshly, but your kindness saved him from spiraling down a dark path. "
-            + "You were a good man and saved him. You win.")).add(new Wait(20))
-    .add(new HideNarration()).add(new CreditsSequence("Thank you for playing our game!"
-    		+ "Contributors: Dylan Mondrus Joshua Burch and Jackson Burch"));
+ var node = get(MyNodeLabels.Conclusion.toString());
+ node.add(new SetDay()).add(new HideDialog()).add(new SetPosition(drunkard,drunkardhousedoor)).add(new NarrationSequence("The drunkard sobered up the next day. He gratefully approached you and revealed that he was the king's brother. "
+         + "He had recently found out that the king was searching for an heir to the throne but deemed him unfit to rule. "
+         + "The drunkard took the news harshly, but your kindness saved him from spiraling down a dark path. "
+         + "You were a good man and saved him. You win.")).add(new Wait(20))
+ .add(new HideNarration()).add(new CreditsSequence("Thank you for playing our game!"
+  + "Contributors: Dylan Mondrus Joshua Burch and Jackson Burch"));
 }
 }

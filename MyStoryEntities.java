@@ -1,9 +1,8 @@
-
 package myclassproject.mystorygraph;
 
 import com.entities.Characters;
+
 import com.entities.Furniture;
-import com.entities.IInteract;
 import com.entities.Item;
 import com.entities.Place;
 import com.enums.BodyTypes;
@@ -13,6 +12,7 @@ import com.enums.FurnitureTypes;
 import com.enums.HairStyle;
 import com.enums.ItemTypes;
 import com.enums.PlaceTypes;
+import com.enums.Effects;
 
 public final class MyStoryEntities {
 	//Create an instance of Character, Place, Furniture, and Item classes 
@@ -47,7 +47,7 @@ public final class MyStoryEntities {
 	public static final Furniture taverntable = new Furniture(tavern, FurnitureTypes.Table);
 	public static final Furniture fireplace = new Furniture(tavern, FurnitureTypes.Fireplace);
 	public static final Furniture roundtable = new Furniture(tavern, FurnitureTypes.RoundTable);
-	public static final Furniture redhousedoor = new Furniture(city, FurnitureTypes.RedHouseDoor);
+	public static final Furniture redhousedoor = new Furniture(city, FurnitureTypes.RedHouseDoor); //Joshua 
 	//public static final Furniture cottageDoor = new Furniture(cottage, FurnitureTypes.Door);
 	//public static final Furniture table = new Furniture(cottage, FurnitureTypes.Table);
 	public static final Furniture dungeonDoor = new Furniture(city, FurnitureTypes.BlueHouseDoor);
@@ -56,13 +56,14 @@ public final class MyStoryEntities {
 	public static final Place drunkardhouse = new Place("Drunkard's House",PlaceTypes.Cottage);
 	public static final Furniture drunkardhousedoor = new Furniture(city, FurnitureTypes.GreenHouseDoor);
 	public static final Furniture forestplant = new Furniture(forestpath, FurnitureTypes.Plant);
-	public static final Furniture tavernenter = new Furniture(tavern, FurnitureTypes.Door);
-	public static final Furniture tavernexit = new Furniture(tavern, FurnitureTypes.Backdoor);
+	public static final Furniture tavernenter = new Furniture(tavern, FurnitureTypes.Door); //Joshua
+	public static final Furniture tavernexit = new Furniture(tavern, FurnitureTypes.Backdoor); //Joshua
 	public static final Characters king = new Characters("King", BodyTypes.F, Clothing.King, HairStyle.Short_Full, Colors.Blonde, 1); //Dylan
 	public static final Furniture cell = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
 	public static final Furniture insideDungeonDoor = new Furniture(dungeon, FurnitureTypes.Door); //Dylan
 	public static final Furniture dungeonshit = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
-	public static final Furniture redhousedoorexit = new Furniture(tavern, FurnitureTypes.Door);
+	public static final Furniture redhousedoorexit = new Furniture(tavern, FurnitureTypes.Door); //Jackson
+		
 	
 	
 	

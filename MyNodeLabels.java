@@ -1,4 +1,3 @@
-
 package myclassproject.mystorygraph;
 
 //Fill this enum with the labels you chose for the NODES of your story graph.
@@ -57,7 +56,6 @@ public enum MyNodeLabels{
 	MerchantRetreatActions,
 	AcceptKingActions,
 	DeathActions,
-	DenyKingActions, HelpDrunkard, FountainNo, LeaveBar, acceptActions, ReturnToCity, GoToTavern, ContinueTalking, RetreatAcceptKingCredits, RetreatDeclineOfferCredits, MenuShowCredits, MenuCloseCredits, 
+	DenyKingActions, HelpDrunkard, FountainNo, LeaveBar, acceptActions, ReturnToCity, GoToTavern, ContinueTalking, RetreatAcceptKingCredits, RetreatDeclineOfferCredits, MenuShowCredits, MenuCloseCredits,redhousedoorexit,  
 	
 }
-
