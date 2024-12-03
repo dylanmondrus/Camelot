@@ -506,7 +506,7 @@ public class MyEdgeBuilder extends NodeBuilder {
 		node.add(new Edge(choice, nextNode));
 	}
 	
-	@BuilderMethod
+	@BuilderMethod //Dylans
 	public void RetreatDenyKingEdges() { //Dylan
 		var node = get(MyNodeLabels.Death.toString()); //What is the last node?
 		var nextNode = get(MyNodeLabels.RetreatDeclineOfferCredits.toString());
