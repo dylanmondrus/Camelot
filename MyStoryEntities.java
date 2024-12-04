@@ -1,7 +1,6 @@
 package myclassproject.mystorygraph;
 
 import com.entities.Characters;
-
 import com.entities.Furniture;
 import com.entities.Item;
 import com.entities.Place;
@@ -12,7 +11,6 @@ import com.enums.FurnitureTypes;
 import com.enums.HairStyle;
 import com.enums.ItemTypes;
 import com.enums.PlaceTypes;
-import com.enums.Effects;
 
 public final class MyStoryEntities {
 	//Create an instance of Character, Place, Furniture, and Item classes 
@@ -63,7 +61,7 @@ public final class MyStoryEntities {
 	public static final Furniture insideDungeonDoor = new Furniture(dungeon, FurnitureTypes.Door); //Dylan
 	public static final Furniture dungeonshit = new Furniture(dungeon, FurnitureTypes.DirtPile); //Dylan
 	public static final Furniture redhousedoorexit = new Furniture(tavern, FurnitureTypes.Door); //Jackson
-		
+
 	
 	
 	

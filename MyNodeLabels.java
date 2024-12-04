@@ -56,6 +56,6 @@ public enum MyNodeLabels{
 	MerchantRetreatActions,
 	AcceptKingActions,
 	DeathActions,
-	DenyKingActions, HelpDrunkard, FountainNo, LeaveBar, acceptActions, ReturnToCity, GoToTavern, ContinueTalking, RetreatAcceptKingCredits, RetreatDeclineOfferCredits, MenuShowCredits, MenuCloseCredits,redhousedoorexit,  
+	DenyKingActions, HelpDrunkard, FountainNo, LeaveBar, acceptActions, ReturnToCity, GoToTavern, ContinueTalking, RetreatAcceptKingCredits, RetreatDeclineOfferCredits, MenuShowCredits, MenuCloseCredits, 
 	
 }

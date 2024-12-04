@@ -12,8 +12,7 @@ public class MyGraph extends Graph {
 	/**
 	 * The constructor creates a new object for each of the values in NodeLabels enum.
 	 */
-	
-	public MyGraph(NodeLabels rootLabel) {
+	public MyGraph() {
 		super(Stream.of(MyNodeLabels.values()).map(z->z.toString()).collect(Collectors.toList()));    
 	}
 	
